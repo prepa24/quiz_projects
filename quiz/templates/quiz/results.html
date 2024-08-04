@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Rezilta Quiz</title>
+</head>
+<body>
+    
+
+{% block content %}
+
+
+
+  <h1>Rezilta Quiz</h1>
+  <p>Total Kesyon: {{ total_questions }}</p>
+  <p>Kòrèk: {{ correct }}</p>
+  <p>Enkòrèk: {{ incorrect }}</p>
+  <p>Sote: {{ skipped }}</p>
+  <p>Pousantaj: {{ score_percentage }}%</p>
+  {% if passed %}
+    <p>Felisitasyon, ou pase egzamen an!</p>
+  {% else %}
+    <p>Dezole, ou pa pase egzamen an.</p>
+  {% endif %}
+  {% if time_up %}
+    <p>Tan ou te gen pou w fè egzamen an fini.</p>
+  {% endif %}
+  <form method="post" action="{% url 'quiz:start_quiz' %}">
+    {% csrf_token %}
+    <button type="submit">Rekomanse</button>
+  </form>
+{% endblock %}
+
+
+
+</body>
+</html>

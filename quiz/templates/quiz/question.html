@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+
+  
+
+{% block content %}
+  <h1>{{ question.text }}</h1>
+  <form method="post" action="{% url 'quiz:submit_answer' %}">
+    {% csrf_token %}
+    <input type="hidden" name="question_id" value="{{ question.id }}">
+    {% for answer in answers %}
+      <label>
+        <input type="radio" name="answer" value="{{ answer.id }}">
+        {{ answer.text }}
+      </label><br>
+    {% endfor %}
+    <button type="submit">Soumèt</button>
+    <button type="submit" name="skip" value="true">Skip</button>
+  </form>
+  {% if has_error %}
+    <p style="color: red;">Ou dwe chwazi yon repons anvan ou soumèt.</p>
+  {% endif %}
+  <p>Tan ki rete: <span id="remaining_time">{{ remaining_time|floatformat:0 }}</span> segonn</p>
+  
+  <script>
+    // Initialize remaining time
+    var remainingTime = {{ remaining_time|floatformat:0 }};
+
+    function updateTime() {
+        if (remainingTime <= 0) {
+            window.location.href = "{% url 'quiz:time_up' %}";
+        } else {
+            remainingTime -= 1;
+            document.getElementById("remaining_time").innerText = remainingTime;
+            setTimeout(updateTime, 1000);
+        }
+    }
+
+    // Start the timer
+    setTimeout(updateTime, 1000);
+  </script>
+{% endblock %}
+
+
+  
+</body>
+</html>
+
