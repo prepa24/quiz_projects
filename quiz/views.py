@@ -5,6 +5,10 @@ import random
 import time
 from django.http import JsonResponse
 
+
+def home(request):
+    return render(request, 'quiz/start.html')
+
 def start_quiz(request):
     try:
         config = QuizConfig.objects.first()
@@ -27,17 +31,14 @@ def start_quiz(request):
     request.session['time_limit'] = time_limit * 60 
     request.session['start_time'] = time.time()
     
-
     selected_questions = random.sample(all_questions, total_questions)
     request.session['questions'] = [q.id for q in selected_questions]
     request.session['current'] = 0
     request.session['answers'] = {}
     request.session['skipped'] = []
+    request.session['correct_answers'] = 0
+    request.session['incorrect_answers'] = 0
     return redirect('quiz:question')
-
-    
-    
-
 
 def question(request):
     questions = request.session.get('questions', [])
@@ -66,11 +67,20 @@ def question(request):
     question = get_object_or_404(Question, id=question_id)
     answers = Answer.objects.filter(question=question)
     has_error = request.GET.get('has_error', False)
+    
+    # Real-time counts
+    correct_count = request.session.get('correct_answers', 0)
+    incorrect_count = request.session.get('incorrect_answers', 0)
+    skipped_count = len(request.session['skipped'])
+    
     context = {
         'question': question,
         'answers': answers,
         'has_error': has_error,
         'remaining_time': remaining_time,
+        'correct_count': correct_count,
+        'incorrect_count': incorrect_count,
+        'skipped_count': skipped_count,
     }
     return render(request, 'quiz/question.html', context)
 
@@ -83,6 +93,11 @@ def submit_answer(request):
             return redirect(f"{reverse('quiz:question')}?has_error=True")
         
         if answer_id:
+            answer = Answer.objects.get(id=answer_id)
+            if answer.is_correct:
+                request.session['correct_answers'] += 1
+            else:
+                request.session['incorrect_answers'] += 1
             request.session['answers'][question_id] = answer_id
 
         if 'skip' in request.POST:
@@ -95,14 +110,8 @@ def submit_answer(request):
         request.session['current'] += 1
 
         # Calculate score to determine if user has passed 80% of the questions correctly
-        correct_answers = 0
+        correct_answers = request.session['correct_answers']
         total_questions = len(request.session['questions'])
-        total_answers = len(request.session['answers'])
-
-        for q_id, a_id in request.session['answers'].items():
-            answer = Answer.objects.get(id=a_id)
-            if answer.is_correct:
-                correct_answers += 1
 
         score_percentage = (correct_answers / total_questions) * 100
 
@@ -125,21 +134,17 @@ def submit_answer(request):
 def results(request):
     answers = request.session.get('answers', {})
     questions = request.session.get('questions', [])
-    correct_answers = 0
-    skipped = len(questions) - len(answers)
+    correct_answers = request.session.get('correct_answers', 0)
+    skipped = len(request.session['skipped'])
 
-    for q_id, a_id in answers.items():
-        answer = Answer.objects.get(id=a_id)
-        if answer.is_correct:
-            correct_answers += 1
-
+    incorrect_answers = len(answers) - correct_answers
     score_percentage = (correct_answers / len(questions)) * 100
     passed = score_percentage >= 80
 
     context = {
         'total_questions': len(questions),
         'correct': correct_answers,
-        'incorrect': len(answers) - correct_answers,
+        'incorrect': incorrect_answers,
         'skipped': skipped,
         'score_percentage': score_percentage,
         'passed': passed,
@@ -149,29 +154,23 @@ def results(request):
 def time_up(request):
     answers = request.session.get('answers', {})
     questions = request.session.get('questions', [])
-    correct_answers = 0
-    skipped = len(questions) - len(answers)
+    correct_answers = request.session.get('correct_answers', 0)
+    skipped = len(request.session['skipped'])
 
-    for q_id, a_id in answers.items():
-        answer = Answer.objects.get(id=a_id)
-        if answer.is_correct:
-            correct_answers += 1
-
+    incorrect_answers = len(answers) - correct_answers
     score_percentage = (correct_answers / len(questions)) * 100
     passed = score_percentage >= 80
 
     context = {
         'total_questions': len(questions),
         'correct': correct_answers,
-        'incorrect': len(answers) - correct_answers,
+        'incorrect': incorrect_answers,
         'skipped': skipped,
         'score_percentage': score_percentage,
         'passed': passed,
         'time_up': True,
     }
     return render(request, 'quiz/results.html', context)
-
-
 
 def check_time(request):
     start_time = request.session.get('start_time')

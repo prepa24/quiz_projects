@@ -1,35 +1,42 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    
+{% include 'base.html' %}
 
-  
+<div class="container mt-5">
+  {% block content %}
+    <div class="card text-center">
+      <div class="card-header">
+        <h3>{{ question.text }}</h3>
+      </div>
+      <div class="card-body">
+        <form method="post" action="{% url 'quiz:submit_answer' %}">
+          {% csrf_token %}
+          <div class="form-check">
+          <input class="form-check-input" type="hidden" name="question_id" value="{{ question.id }}" />
+          
+          <div class="form-check">
+          {% for answer in answers %}
+            <label class="form-check-label  mt-2" >
+              <input class="form-check-input text-center" type="radio" name="answer" value="{{ answer.id }}" />
+              {{ answer.text }}
+            </label><br />
+          {% endfor %}
+        </div>
+          <button class="btn btn-success m-5" type="submit">Soumèt</button>
+          <button class="btn btn-light" type="submit" name="skip" value="true">Skip</button>
+        </form>
+        {% if has_error %}
+          <p style="color: red;">Ou dwe chwazi yon repons anvan ou soumèt.</p>
+        {% endif %}
+      </div>
+      <div class="card-footer text-body-secondary">
+        <a href="#" class="m-5 link-primary link-underline link-underline-opacity-0 link-underline-primary">Tan ki rete: <span id="remaining_time">{{ remaining_time|floatformat:0 }}</span> segonn</a>
 
-{% block content %}
-  <h1>{{ question.text }}</h1>
-  <form method="post" action="{% url 'quiz:submit_answer' %}">
-    {% csrf_token %}
-    <input type="hidden" name="question_id" value="{{ question.id }}">
-    {% for answer in answers %}
-      <label>
-        <input type="radio" name="answer" value="{{ answer.id }}">
-        {{ answer.text }}
-      </label><br>
-    {% endfor %}
-    <button type="submit">Soumèt</button>
-    <button type="submit" name="skip" value="true">Skip</button>
-  </form>
-  {% if has_error %}
-    <p style="color: red;">Ou dwe chwazi yon repons anvan ou soumèt.</p>
-  {% endif %}
-  <p>Tan ki rete: <span id="remaining_time">{{ remaining_time|floatformat:0 }}</span> segonn</p>
-  
-  <script>
+        <a href="#" class="m-5 link-success link-underline link-underline-opacity-0">kesyon ki bon {{ correct_count }}</a>
+        <a href="#" class="m-5 link-danger link-underline link-underline-opacity-0">kesyon ki pa bon {{ incorrect_count }}</a>
+        <a href="#" class="m-5 link-warning link-underline link-underline-opacity-0">kesyon ou skip {{ skipped_count }}</a>
+      </div>
+    </div>
+
+    <script>
     // Initialize remaining time
     var remainingTime = {{ remaining_time|floatformat:0 }};
 
@@ -46,10 +53,5 @@
     // Start the timer
     setTimeout(updateTime, 1000);
   </script>
-{% endblock %}
-
-
-  
-</body>
-</html>
-
+  {% endblock %}
+</div>

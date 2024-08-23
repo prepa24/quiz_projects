@@ -1,36 +1,41 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Rezilta Quiz</title>
-</head>
-<body>
-    
+{% include 'base.html' %}
+<div class="container text-center mt-5">
+
 
 {% block content %}
+  
+  
 
-
-
-  <h1>Rezilta Quiz</h1>
+  {% if time_up %}
+    <p>Tan ou te gen pou w fè egzamen an fini.</p>
+  {% elif passed %}
+  <h1>Rezilta Quiz La</h1>
   <p>Total Kesyon: {{ total_questions }}</p>
   <p>Kòrèk: {{ correct }}</p>
   <p>Enkòrèk: {{ incorrect }}</p>
   <p>Sote: {{ skipped }}</p>
   <p>Pousantaj: {{ score_percentage }}%</p>
-  {% if passed %}
     <p>Felisitasyon, ou pase egzamen an!</p>
   {% else %}
+  <h1>Rezilta Quiz La</h1>
+  <p>Total Kesyon: {{ total_questions }}</p>
+  <p>Kòrèk: {{ correct }}</p>
+  <p>Enkòrèk: {{ incorrect }}</p>
+  <p>Sote: {{ skipped }}</p>
+  <p>Pousantaj: {{ score_percentage }}%</p>
     <p>Dezole, ou pa pase egzamen an.</p>
   {% endif %}
-  {% if time_up %}
-    <p>Tan ou te gen pou w fè egzamen an fini.</p>
-  {% endif %}
-  <form method="post" action="{% url 'quiz:start_quiz' %}">
+  
+  
+  <form method="post" action="{% url 'quiz:home' %}">
     {% csrf_token %}
-    <button type="submit">Rekomanse</button>
+    <button class="btn btn-success mt-5" type="submit">Tounen Nan Paj Akey la</button>
   </form>
+
+
+
+
+
 {% endblock %}
 
-
-
-</body>
-</html>
+</div>
