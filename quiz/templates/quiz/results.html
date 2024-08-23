@@ -7,23 +7,24 @@
   
 
   {% if time_up %}
-    <p>Tan ou te gen pou w fè egzamen an fini.</p>
+    <p class="fs-2 text-danger">Tan ou te gen pou w fè egzamen an fini.</p>
+    <p class="fs-3 text-danger">Ou ka toujou re eseye pas Tes la Vale fwa ou vle pou w amelyore <br> .</p>
   {% elif passed %}
   <h1>Rezilta Quiz La</h1>
-  <p>Total Kesyon: {{ total_questions }}</p>
-  <p>Kòrèk: {{ correct }}</p>
-  <p>Enkòrèk: {{ incorrect }}</p>
-  <p>Sote: {{ skipped }}</p>
-  <p>Pousantaj: {{ score_percentage }}%</p>
-    <p>Felisitasyon, ou pase egzamen an!</p>
+  <p class="fs-2 ">Total Kesyon: 50</p> <!--{{ total_questions }}-->
+  <p class="fs-2 text-success">Kòrèk: {{ correct }}</p>
+  <p class="fs-2 text-danger">Enkòrèk: {{ incorrect }}</p>
+  <!--<p class="fs-2 text-primary">Sote: {{ skipped }}</p>-->
+  <p class="fs-2 text-success">Pousantaj: {{ score_percentage }}%</p>
+    <p class="fs-2 text-success">Felisitasyon, ou pase egzamen an!</p>
   {% else %}
   <h1>Rezilta Quiz La</h1>
-  <p>Total Kesyon: {{ total_questions }}</p>
-  <p>Kòrèk: {{ correct }}</p>
-  <p>Enkòrèk: {{ incorrect }}</p>
-  <p>Sote: {{ skipped }}</p>
-  <p>Pousantaj: {{ score_percentage }}%</p>
-    <p>Dezole, ou pa pase egzamen an.</p>
+  <p class="fs-2 ">Total Kesyon: 50</p> <!--{{ total_questions }}-->
+  <p class="fs-2 text-success">Kòrèk: {{ correct }}</p>
+  <p class="fs-2 text-danger">Enkòrèk: {{ incorrect }}</p>
+  <!--<p class="fs-2 text-primary">Sote: {{ skipped }}</p>-->
+  <p class="fs-2 text-danger">Pousantaj: {{ score_percentage }}%</p>
+    <p class="fs-2 text-danger">Dezole, ou pa pase egzamen an.</p>
   {% endif %}
   
   
