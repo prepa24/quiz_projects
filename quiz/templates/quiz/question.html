@@ -15,8 +15,8 @@
       <div class="card-body">
         <form method="post" action="{% url 'quiz:submit_answer' %}">
           {% csrf_token %}
-          <div class="form-check">
-          <input class="form-check-input" type="hidden" name="question_id" value="{{ question.id }}" />
+          
+          <input class="" type="hidden" name="question_id" value="{{ question.id }}" />
           
           <div class="form-check">
           {% for answer in answers %}
