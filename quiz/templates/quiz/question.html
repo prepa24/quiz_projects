@@ -2,8 +2,8 @@
 
 <div class="container mt-5">
   {% block content %}
-    <div class="card text-center">
-      <div class="card-header">
+    <div class="card ">
+      <div class="card-header text-center">
         <h3>
           {% if question.image %}
           <img src="{{ question.image.url }}" alt="{{ question.text }}">
@@ -12,22 +12,24 @@
           {{ question.text }}
         </h3>
       </div>
-      <div class="card-body">
+      <div class="card-body text-start">
         <form method="post" action="{% url 'quiz:submit_answer' %}">
           {% csrf_token %}
           
           <input class="" type="hidden" name="question_id" value="{{ question.id }}" />
           
-          <div class="form-check">
+          <div class="form-check col-lg-3 col-md-3 col-sm-3 container justify-content-center">
           {% for answer in answers %}
-            <label class="form-check-label  mt-2" >
-              <input class="form-check-input text-center" type="radio" name="answer" value="{{ answer.id }}" />
+          <input class="form-check-input fs-6" type="radio" name="answer" value="{{ answer.id }}" />
+            <label class="form-check-label fs-6" >
+              
               {{ answer.text }}
             </label><br />
           {% endfor %}
+        
+          <button class="btn btn-success btn-lg  m-3" type="submit">Soumèt</button>
+          <button class="btn btn-light btn-lg" type="submit" name="skip" value="true">Skip</button>
         </div>
-          <button class="btn btn-success m-5" type="submit">Soumèt</button>
-          <button class="btn btn-light" type="submit" name="skip" value="true">Skip</button>
         </form>
         {% if has_error %}
           <p style="color: red;">Ou dwe chwazi yon repons anvan ou soumèt.</p>
