@@ -100,7 +100,19 @@ DATABASES = {
 
 POSTGRES_LOCALLY = False
 if ENVIRONMENT == 'production' or POSTGRES_LOCALLY == True:
-    DATABASES['default'] = dj_database_url.parse(env('DATABASE_URL'))
+    #DATABASES['default'] = dj_database_url.parse(env('DATABASE_URL'))
+
+    DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': env('DB_NAME'),
+        'USER': env('DB_USER'),
+        'PASSWORD': env('DB_PASSWORD'),
+        'HOST':env('DB_HOST'),
+        'PORT':'3306',
+    }
+    }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
