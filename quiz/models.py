@@ -3,6 +3,7 @@
 # Create your models here.
 from django.db import models
 from PIL import Image
+from django_resized import ResizedImageField
 
 
 
@@ -15,22 +16,11 @@ class QuizConfig(models.Model):
 
 class Question(models.Model):
     text = models.CharField(max_length=255)
-    image = models.ImageField(upload_to='question_images/', null=True, blank=True)
+    #image = models.ImageField(upload_to='question_images/', null=True, blank=True)
+    image1 = ResizedImageField(size=[100, 100], upload_to='question_images', null=True, blank=True)
 
     def __str__(self):
         return self.text
-
-    def save(self, *args, **kwargs):
-        super().save(*args, **kwargs)
-        if self.image:
-            # Get the first ImageSettings object or create one with default values
-            settings, created = ImageSettings.objects.get_or_create(
-                defaults={'width': 100, 'height': 100}
-            )
-            img = Image.open(self.image.path)
-            img = img.resize((settings.width, settings.height))
-            img.save(self.image.path)
-
     
 
 class Answer(models.Model):

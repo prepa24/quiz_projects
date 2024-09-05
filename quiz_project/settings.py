@@ -49,6 +49,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'cloudinary_storage',
+    'cloudinary',
     'admin_honeypot',
     'quiz'
 ]
@@ -100,7 +102,24 @@ DATABASES = {
 
 POSTGRES_LOCALLY = False
 if ENVIRONMENT == 'production' or POSTGRES_LOCALLY == True:
-    DATABASES['default'] = dj_database_url.parse(env('DATABASE_URL'))
+    #DATABASES['default'] = dj_database_url.parse(env('DATABASE_URL'))
+
+    DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': env('DB_NAME'),
+        'USER': env('DB_USER'),
+        'PASSWORD': env('DB_PASSWORD'),
+        'HOST':env('DB_HOST'),
+        'PORT':'3306',
+        'OPTIONS': {
+        #'charset': 'utf8mb3',
+        'init_command': 'SET default_storage_engine=INNODB',
+        # The characterset you need
+    }
+    }
+    }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -139,9 +158,25 @@ USE_TZ = True
 STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
-MEDIA_ROOT =  os.path.join(BASE_DIR, 'question_images')
+#MEDIA_ROOT =  os.path.join(BASE_DIR, 'question_images')
 MEDIA_URL = '/question_images/'
 
+
+if ENVIRONMENT == 'production' or POSTGRES_LOCALLY == True:
+    DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+    CLOUDINARY_STORAGE = {
+        'CLOUD_NAME': env('CLOUD_NAME'),
+        'API_KEY': env('CLOUD_API_KEY'),
+        'API_SECRET': env('CLOUD_API_SECRET'),
+        'SECURE': True,
+        'API_PROXY': 'http://proxy.server:3128'
+    }
+    
+else:
+    MEDIA_ROOT =  os.path.join(BASE_DIR, 'question_images')
+
+
+    
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
