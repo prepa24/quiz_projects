@@ -2,10 +2,7 @@ asgiref==3.8.1
 certifi==2024.8.30
 charset-normalizer==3.3.2
 cloudinary==1.41.0
-<<<<<<< HEAD
-=======
 Cython==0.29.33
->>>>>>> de06e5d8cedc6e0342f4b015ac697cc17536041c
 dj-database-url==2.2.0
 Django==5.0.7
 django-admin-honeypot-updated-2021==1.2.0
