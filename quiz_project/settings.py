@@ -112,6 +112,7 @@ if ENVIRONMENT == 'production' or POSTGRES_LOCALLY == True:
         'PASSWORD': env('DB_PASSWORD'),
         'HOST':env('DB_HOST'),
         'PORT':'3306',
+<<<<<<< HEAD
         #'CHARSET': 'utf8mb3',
         #'COLLATION': 'utf8mb4_unicode_ci',
         'OPTIONS': {
@@ -120,6 +121,13 @@ if ENVIRONMENT == 'production' or POSTGRES_LOCALLY == True:
         # The characterset you need
     }
 
+=======
+        'OPTIONS': {
+        #'charset': 'utf8mb3',
+        'init_command': 'SET default_storage_engine=INNODB',
+        # The characterset you need
+    }
+>>>>>>> de06e5d8cedc6e0342f4b015ac697cc17536041c
     }
     }
 
@@ -164,8 +172,15 @@ USE_TZ = True
 STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
+<<<<<<< HEAD
 MEDIA_URL = '/question_images/'
 
+=======
+#MEDIA_ROOT =  os.path.join(BASE_DIR, 'question_images')
+MEDIA_URL = '/question_images/'
+
+
+>>>>>>> de06e5d8cedc6e0342f4b015ac697cc17536041c
 if ENVIRONMENT == 'production' or POSTGRES_LOCALLY == True:
     DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
     CLOUDINARY_STORAGE = {
@@ -175,6 +190,7 @@ if ENVIRONMENT == 'production' or POSTGRES_LOCALLY == True:
         'SECURE': True,
         'API_PROXY': 'http://proxy.server:3128'
     }
+<<<<<<< HEAD
     # STORAGES = {
     #     "default": {
     #         "BACKEND": "storages.backends.s3.S3Storage",
@@ -189,12 +205,19 @@ if ENVIRONMENT == 'production' or POSTGRES_LOCALLY == True:
     # AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
     # AWS_S3_FILE_OVERWRITE = False
     # AWS_LOCATION = 'media'
+=======
+    
+>>>>>>> de06e5d8cedc6e0342f4b015ac697cc17536041c
 else:
     MEDIA_ROOT =  os.path.join(BASE_DIR, 'question_images')
 
 
+<<<<<<< HEAD
 
 
+=======
+    
+>>>>>>> de06e5d8cedc6e0342f4b015ac697cc17536041c
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
