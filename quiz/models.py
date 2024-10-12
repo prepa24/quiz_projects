@@ -4,6 +4,20 @@
 from django.db import models
 from PIL import Image
 from django_resized import ResizedImageField
+from django.contrib.auth.models import User
+from django.utils import timezone
+
+class QuizHistory(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    date_taken = models.DateTimeField(default=timezone.now)
+    passed = models.BooleanField(default=False)
+    correct_answers = models.PositiveIntegerField()
+    incorrect_answers = models.PositiveIntegerField()
+    total_time = models.DurationField(help_text="Time taken to complete the quiz")
+
+    def __str__(self):
+        return f"{self.user.username} - {self.date_taken.strftime('%Y-%m-%d %H:%M:%S')}"
+
 
 
 

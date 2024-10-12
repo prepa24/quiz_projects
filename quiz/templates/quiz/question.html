@@ -2,65 +2,80 @@
 
 <div class="container mt-5">
   {% block content %}
-    <div class="card ">
-      <div class="card-header text-center">
-        <h3>
-          {% if question.image %}
-          <img src="{{ question.image.url }}" alt="{{ question.text }}">
-          
-          {% endif %}
-          {{ question.text|safe }}
-        </h3>
-      </div>
-      <div class="card-body text-start">
-        <form method="post" action="{% url 'quiz:submit_answer' %}" content='text/html; charset=UTF-8'>
-          {% csrf_token %}
-          
-          <input class="" type="hidden" name="question_id" value="{{ question.id }}" />
-          
-          <div class="form-check col-lg-6 col-md-6 col-sm-6 container justify-content-center">
+  <div class="card ">
+    <div class="card-header text-center">
+      <h3>
+        {% if question.image %}
+        <img src="{{ question.image.url }}" alt="{{ question.text }}">
+
+        {% endif %}
+        {{ question.text|safe }}
+      </h3>
+    </div>
+    <div class="card-body text-start">
+      <form method="post" action="{% url 'quiz:submit_answer' %}" content='text/html; charset=UTF-8'>
+        {% csrf_token %}
+
+        <input class="" type="hidden" name="question_id" value="{{ question.id }}" />
+
+        <div class="form-check col-lg-6 col-md-6 col-sm-6 container justify-content-center">
           {% for answer in answers %}
           <input class="form-check-input fs-6" type="radio" name="answer" value="{{ answer.id }}" />
-            <label class="form-check-label fs-6" >
-              
-              {{ answer.text|safe }}
-            </label><br />
+          <label class="form-check-label fs-6">
+
+            {{ answer.text|safe }}
+          </label><br />
           {% endfor %}
-        
+
           <button class="btn btn-success btn-lg  m-3" type="submit">Soumèt</button>
           <button class="btn btn-light btn-lg" type="submit" name="skip" value="true">Skip</button>
-        
-        </form>
-        {% if has_error %}
-          <p style="color: red;">Ou dwe chwazi yon repons anvan ou soumèt.</p>
-        {% endif %}
-      </div>
-      </div>
-      <div class="card-footer text-body-secondary">
-        <a href="#" class="m-5 link-primary link-underline link-underline-opacity-0 link-underline-primary">Tan ki rete: <span id="remaining_time">{{ remaining_time|floatformat:0 }}</span> segonn</a>
 
-        <a href="#" class="m-5 link-success link-underline link-underline-opacity-0">kesyon ki bon {{ correct_count }}</a>
-        <a href="#" class="m-5 link-danger link-underline link-underline-opacity-0">kesyon ki pa bon {{ incorrect_count }}</a>
-        <a href="#" class="m-5 link-warning link-underline link-underline-opacity-0">kesyon ou skip {{ skipped_count }}</a>
-      </div>
+      </form>
+      {% if has_error %}
+      <p style="color: red;">Ou dwe chwazi yon repons anvan ou soumèt.</p>
+      {% endif %}
     </div>
+  </div>
+  <div class="card-footer text-body-secondary">
+    <a href="#" class="m-5 link-primary link-underline link-underline-opacity-0 link-underline-primary">Tan ki Rete:
+      <span id="remaining_minutes"> {{ remaining_minutes }} minit {{ remaining_seconds }} segonn</span> segonn</a>
 
-    <script>
-    // Initialize remaining time
-    var remainingTime = {{ remaining_time|floatformat:0 }};
+    <a href="#" class="m-5 link-success link-underline link-underline-opacity-0">kesyon ki bon {{ correct_count }}</a>
+    <a href="#" class="m-5 link-danger link-underline link-underline-opacity-0">kesyon ki pa bon {{ incorrect_count}}</a>
+    <a href="#" class="m-5 link-warning link-underline link-underline-opacity-0">kesyon ou skip {{ skipped_count }}</a>
+  </div>
+</div>
 
-    function updateTime() {
-        if (remainingTime <= 0) {
-            window.location.href = "{% url 'quiz:time_up' %}";
-        } else {
-            remainingTime -= 1;
-            document.getElementById("remaining_time").innerText = remainingTime;
-            setTimeout(updateTime, 1000);
-        }
-    }
+<script>
+  // Initial remaining time in seconds
+  var remainingMinutes = {{ remaining_minutes }};
+  var remainingSeconds = {{ remaining_seconds }};
 
-    // Start the timer
-    setTimeout(updateTime, 1000);
-  </script>
-  {% endblock %}
+  function updateTime() {
+      if (remainingMinutes <= 0 && remainingSeconds <= 0) {
+          // Redirije itilizatè a lè tan fini
+          window.location.href = "{% url 'quiz:time_up' %}";
+      } else {
+          // Ajiste tan an chak segonn
+          if (remainingSeconds === 0) {
+              if (remainingMinutes > 0) {
+                  remainingMinutes -= 1;
+                  remainingSeconds = 59;
+              }
+          } else {
+              remainingSeconds -= 1;
+          }
+          // Mizajou afichaj la
+          document.getElementById("remaining_minutes").innerText = remainingMinutes + " minit, " + remainingSeconds + " segonn";
+          
+          // Repran tcheke a chak segonn
+          setTimeout(updateTime, 1000);
+      }
+  }
+
+  // Kòmanse kontwolè tan an
+  setTimeout(updateTime, 1000);
+</script>
+
+{% endblock %}
 </div>

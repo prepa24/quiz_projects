@@ -1,7 +1,7 @@
 
 
 from django.contrib import admin
-from .models import ImageSettings, Question, Answer, QuizConfig, QuizSettings
+from .models import ImageSettings, Question, Answer, QuizConfig, QuizSettings, QuizHistory
 
 class AnswerInline(admin.TabularInline):
     model = Answer
@@ -13,3 +13,4 @@ admin.site.register(Question, QuestionAdmin)
 admin.site.register(QuizConfig)
 admin.site.register(QuizSettings)
 admin.site.register(ImageSettings)
+admin.site.register(QuizHistory)

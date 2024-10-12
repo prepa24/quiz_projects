@@ -1,10 +1,15 @@
 # -*- coding: utf-8 -*-
+from datetime import datetime
+from django.utils import timezone
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
-from .models import Question, Answer, QuizConfig, QuizSettings
+from .models import Question, Answer, QuizConfig, QuizHistory, QuizSettings
 import random
 import time
-from django.http import JsonResponse
+from django.http import HttpResponse, JsonResponse
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+
 
 
 def home(request):
@@ -59,9 +64,13 @@ def question(request):
         return redirect('quiz:start_quiz')
 
     elapsed_time = time.time() - start_time
-    remaining_time = time_limit - elapsed_time
+    remaining_time_seconds = time_limit - int(elapsed_time)
 
-    if remaining_time <= 0:
+    # Konvèti segonn yo an minit
+    remaining_minutes = remaining_time_seconds // 60
+    remaining_seconds = remaining_time_seconds % 60
+
+    if remaining_minutes <= 0:
         return redirect('quiz:time_up')
 
     question_id = questions[current]
@@ -78,7 +87,9 @@ def question(request):
         'question': question,
         'answers': answers,
         'has_error': has_error,
-        'remaining_time': remaining_time,
+        #'remaining_time': remaining_time,
+        'remaining_minutes': remaining_minutes,
+        'remaining_seconds': remaining_seconds,
         'correct_count': correct_count,
         'incorrect_count': incorrect_count,
         'skipped_count': skipped_count,
@@ -133,6 +144,10 @@ def submit_answer(request):
         return redirect('quiz:results')
 
 def results(request):
+    user = request.user  # Ensure this retrieves the logged-in User instance
+    if not isinstance(user, User):
+        return HttpResponse("User must be logged in to view results.", status=403)
+
     answers = request.session.get('answers', {})
     questions = request.session.get('questions', [])
     correct_answers = request.session.get('correct_answers', 0)
@@ -141,6 +156,18 @@ def results(request):
     incorrect_answers = len(answers) - correct_answers
     score_percentage = (correct_answers / len(questions)) * 100
     passed = score_percentage >= 80
+    #passed = correct_answers >= score_percentage
+    start_time = request.session.get('start_time')
+    total_time = timezone.now() - timezone.make_aware(datetime.fromtimestamp(start_time))
+
+    # Save the quiz attempt
+    QuizHistory.objects.create(
+        user=user,
+        passed=passed,
+        correct_answers=correct_answers,
+        incorrect_answers=incorrect_answers,
+        total_time=total_time
+    )
 
     context = {
         'total_questions': len(questions),
@@ -151,6 +178,14 @@ def results(request):
         'passed': passed,
     }
     return render(request, 'quiz/results.html', context)
+
+@login_required
+def history_view(request):
+    history = QuizHistory.objects.filter(user=request.user).order_by('-date_taken')
+    return render(request, 'quiz/history.html', {'history': history})
+
+
+
 
 def time_up(request):
     answers = request.session.get('answers', {})

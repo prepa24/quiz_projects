@@ -52,7 +52,8 @@ INSTALLED_APPS = [
     'cloudinary_storage',
     'cloudinary',
     'admin_honeypot',
-    'quiz'
+    'quiz',
+    'django_cleanup',
 ]
 
 MIDDLEWARE = [
@@ -164,7 +165,7 @@ USE_TZ = True
 STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
-MEDIA_URL = '/question_images/'
+
 
 #MEDIA_ROOT =  os.path.join(BASE_DIR, 'question_images')
 MEDIA_URL = '/question_images/'
@@ -180,20 +181,7 @@ if ENVIRONMENT == 'production' or POSTGRES_LOCALLY == True:
         'SECURE': True,
         'API_PROXY': 'http://proxy.server:3128'
     }
-    # STORAGES = {
-    #     "default": {
-    #         "BACKEND": "storages.backends.s3.S3Storage",
-    #     },
-    #     "staticfiles": {
-    #         "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
-    #     },
-    # }
-    # AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID')
-    # AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY')
-    # AWS_STORAGE_BUCKET_NAME = env('AWS_STORAGE_BUCKET_NAME')
-    # AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
-    # AWS_S3_FILE_OVERWRITE = False
-    # AWS_LOCATION = 'media'
+   
 else:
     MEDIA_ROOT =  os.path.join(BASE_DIR, 'question_images')
 

@@ -1,0 +1,24 @@
+<!-- quiz/history.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>Quiz History</h2>
+    <table>
+        <tr>
+            <th>Date Taken</th>
+            <th>Passed</th>
+            <th>Correct Answers</th>
+            <th>Incorrect Answers</th>
+            <th>Total Time</th>
+        </tr>
+        {% for record in history %}
+        <tr>
+            <td>{{ record.date_taken|date:"Y-m-d H:i" }}</td>
+            <td>{{ record.passed|yesno:"Yes,No" }}</td>
+            <td>{{ record.correct_answers }}</td>
+            <td>{{ record.incorrect_answers }}</td>
+            <td>{{ record.total_time }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
