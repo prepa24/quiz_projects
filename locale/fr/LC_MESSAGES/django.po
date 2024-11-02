@@ -1,0 +1,131 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-11-01 20:41-0400\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: quiz/templates/quiz/question.html:30
+msgid "Soumèt"
+msgstr ""
+
+#: quiz/templates/quiz/question.html:31
+msgid "Sote"
+msgstr ""
+
+#: quiz/templates/quiz/question.html:35
+msgid "Ou dwe chwazi yon repons anvan ou soumèt."
+msgstr ""
+
+#: quiz/templates/quiz/question.html:40
+msgid "Tan ki Rete:"
+msgstr ""
+
+#: quiz/templates/quiz/question.html:41
+msgid "minit"
+msgstr ""
+
+#: quiz/templates/quiz/question.html:41
+msgid "segonn"
+msgstr ""
+
+#: quiz/templates/quiz/question.html:43
+msgid "kesyon ki bon"
+msgstr ""
+
+#: quiz/templates/quiz/question.html:44
+msgid "kesyon ki pa bon"
+msgstr ""
+
+#: quiz/templates/quiz/question.html:45
+msgid "kesyon ou skip"
+msgstr ""
+
+#: quiz/templates/quiz/results.html:10
+msgid "Tan ou te gen pou w fè egzamen an fini."
+msgstr ""
+
+#: quiz/templates/quiz/results.html:11
+msgid "Ou ka toujou re eseye pas Tès la Vale fwa ou vle pou w amelyore"
+msgstr ""
+
+#: quiz/templates/quiz/results.html:13
+msgid "Rezilta Tès La"
+msgstr ""
+
+#: quiz/templates/quiz/results.html:14 quiz/templates/quiz/results.html:22
+msgid "Total Kesyon:"
+msgstr ""
+
+#: quiz/templates/quiz/results.html:15 quiz/templates/quiz/results.html:23
+msgid "Kòrèk:"
+msgstr ""
+
+#: quiz/templates/quiz/results.html:16 quiz/templates/quiz/results.html:24
+msgid "Enkòrèk:"
+msgstr ""
+
+#: quiz/templates/quiz/results.html:18 quiz/templates/quiz/results.html:26
+msgid "Pousantaj:"
+msgstr ""
+
+#: quiz/templates/quiz/results.html:19
+msgid "Felisitasyon, ou pase egzamen an!"
+msgstr ""
+
+#: quiz/templates/quiz/results.html:27
+msgid "Dezole, ou pa pase egzamen an."
+msgstr ""
+
+#: quiz/templates/quiz/results.html:33
+msgid "Tounen Nan Paj Akey la"
+msgstr ""
+
+#: quiz/templates/quiz/start.html:6
+msgid "Byenveni nan Tès Pratik lisans Florida a"
+msgstr ""
+
+#: quiz/templates/quiz/start.html:10
+msgid "Kòmanse Tès la"
+msgstr ""
+
+#: quiz_project/settings.py:164
+msgid "Kreyòl"
+msgstr "Creole"
+
+#: quiz_project/settings.py:165
+msgid "English"
+msgstr "Anglais"
+
+#: quiz_project/settings.py:166
+msgid "Español"
+msgstr "Espagnol"
+
+#: quiz_project/settings.py:167
+msgid "Français"
+msgstr "Français"
+
+#: templates/base.html:24
+msgid "Akèy"
+msgstr "Acceuil"
+
+#: templates/base.html:25
+msgid "Istory"
+msgstr "History"
+
+#: templates/base.html:35
+msgid "Chanje lang"
+msgstr ""

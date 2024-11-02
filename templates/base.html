@@ -1,3 +1,4 @@
+{% load i18n %}
 <DOCTYPE html>
 <html lang="fr-fr">
   <head>
@@ -20,9 +21,21 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div class="navbar-nav">
-            <a class="nav-link active" aria-current="page" href="{% url 'quiz:home' %}">Home</a>
-            <a class="nav-link active" aria-current="page" href="{% url 'quiz:history' %}">History</a>
+            <a class="nav-link active" aria-current="page" href="{% url 'quiz:home' %}"> {% trans "Akèy" %} </a>
+            <a class="nav-link active" aria-current="page" href="{% url 'quiz:history' %}"> {% trans "Istory" %} </a>
 
+            <form action="{% url 'set_language' %}" method="post">
+              {% csrf_token %}
+              <select name="language">
+                <option value="">chwazi yon lang </option>
+                  <option value="ht">Kreyòl</option>
+                  <option value="en">English</option>
+                  <option value="es">Español</option>
+                  <option value="fr">Français</option>
+              </select>
+              <button type="submit">{% trans "Chanje lang" %}</button>
+          </form>
+          
           </div>
         </div>
       </div>

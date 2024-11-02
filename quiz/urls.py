@@ -12,4 +12,5 @@ urlpatterns = [
     path('time_up/', views.time_up, name='time_up'),
     path('check_time/', views.check_time, name='check_time'),
     path('history/', views.history_view, name='history'),
+    
 ]

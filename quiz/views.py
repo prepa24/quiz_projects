@@ -9,7 +9,7 @@ import time
 from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-
+from django.utils.translation import gettext as _
 
 
 def home(request):

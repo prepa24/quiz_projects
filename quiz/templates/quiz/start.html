@@ -1,13 +1,13 @@
 {% include 'base.html' %}
-
+{% load i18n %}
 
 <div class="container text-center mt-5">
 {% block content %}
-  <h1 class="">Byenveni nan Test Pratik lisans Florida a</h1>
+  <h1 class="">{% trans "Byenveni nan Tès Pratik lisans Florida a" %}</h1>
 
   <form method="post" action="{% url 'quiz:start_quiz' %}">
     {% csrf_token %}
-    <button class="btn btn-success mt-5" type="submit">Kòmanse Tes la</button>
+    <button class="btn btn-success mt-5" type="submit">{% trans "Kòmanse Tès la" %}</button>
   </form>
 {% endblock %}
 </div>

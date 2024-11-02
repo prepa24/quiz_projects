@@ -1,4 +1,5 @@
 {% include 'base.html' %}
+{% load i18n %}
 <div class="container text-center mt-5">
 
 
@@ -7,30 +8,30 @@
   
 
   {% if time_up %}
-    <p class="fs-2 text-danger">Tan ou te gen pou w fè egzamen an fini.</p>
-    <p class="fs-3 text-danger">Ou ka toujou re eseye pas Tès la Vale fwa ou vle pou w amelyore <br> .</p>
+    <p class="fs-2 text-danger">{% trans "Tan ou te gen pou w fè egzamen an fini." %}</p>
+    <p class="fs-3 text-danger">{% trans "Ou ka toujou re eseye pas Tès la Vale fwa ou vle pou w amelyore" %} <br> .</p>
   {% elif passed %}
-  <h1>Rezilta Tès La</h1>
-  <p class="fs-2 ">Total Kesyon: 50</p> <!--{{ total_questions }}-->
-  <p class="fs-2 text-success">Kòrèk: {{ correct }}</p>
-  <p class="fs-2 text-danger">Enkòrèk: {{ incorrect }}</p>
+  <h1>{% trans "Rezilta Tès La" %}</h1>
+  <p class="fs-2 ">{% trans "Total Kesyon:" %} 50</p> <!--{{ total_questions }}-->
+  <p class="fs-2 text-success">{% trans "Kòrèk:" %} {{ correct }}</p>
+  <p class="fs-2 text-danger">{% trans "Enkòrèk:" %}" {{ incorrect }}</p>
   <!--<p class="fs-2 text-primary">Sote: {{ skipped }}</p>-->
-  <p class="fs-2 text-success">Pousantaj: {{ score_percentage }}%</p>
-    <p class="fs-2 text-success">Felisitasyon, ou pase egzamen an!</p>
+  <p class="fs-2 text-success">{% trans "Pousantaj:" %} {{ score_percentage }}%</p>
+    <p class="fs-2 text-success">{% trans "Felisitasyon, ou pase egzamen an!" %}</p>
   {% else %}
   <h1>Rezilta Tès La</h1>
-  <p class="fs-2 ">Total Kesyon: 50</p> <!--{{ total_questions }}-->
-  <p class="fs-2 text-success">Kòrèk: {{ correct }}</p>
-  <p class="fs-2 text-danger">Enkòrèk: {{ incorrect }}</p>
+  <p class="fs-2 ">{% trans "Total Kesyon:" %} 50</p> <!--{{ total_questions }}-->
+  <p class="fs-2 text-success">{% trans "Kòrèk:" %} {{ correct }}</p>
+  <p class="fs-2 text-danger">{% trans "Enkòrèk:" %} {{ incorrect }}</p>
   <!--<p class="fs-2 text-primary">Sote: {{ skipped }}</p>-->
-  <p class="fs-2 text-danger">Pousantaj: {{ score_percentage }}%</p>
-    <p class="fs-2 text-danger">Dezole, ou pa pase egzamen an.</p>
+  <p class="fs-2 text-danger">{% trans "Pousantaj:" %} {{ score_percentage }}%</p>
+    <p class="fs-2 text-danger">{% trans "Dezole, ou pa pase egzamen an." %}</p>
   {% endif %}
   
   
   <form method="post" action="{% url 'quiz:home' %}">
     {% csrf_token %}
-    <button class="btn btn-success mt-5" type="submit">Tounen Nan Paj Akey la</button>
+    <button class="btn btn-success mt-5" type="submit">{% trans "Tounen Nan Paj Akey la" %}</button>
   </form>
 
 

@@ -1,4 +1,5 @@
 {% include 'base.html' %}
+{% load i18n %}
 
 <div class="container mt-5">
   {% block content %}
@@ -27,22 +28,22 @@
           </label><br />
           {% endfor %}
 
-          <button class="btn btn-success btn-lg  m-3" type="submit">Soumèt</button>
-          <button class="btn btn-light btn-lg" type="submit" name="skip" value="true">Skip</button>
+          <button class="btn btn-success btn-lg  m-3" type="submit">{% trans "Soumèt" %}</button>
+          <button class="btn btn-light btn-lg" type="submit" name="skip" value="true">{% trans "Sote" %}</button>
 
       </form>
       {% if has_error %}
-      <p style="color: red;">Ou dwe chwazi yon repons anvan ou soumèt.</p>
+      <p style="color: red;">{% trans "Ou dwe chwazi yon repons anvan ou soumèt." %}</p>
       {% endif %}
     </div>
   </div>
   <div class="card-footer text-body-secondary">
-    <a href="#" class="m-5 link-primary link-underline link-underline-opacity-0 link-underline-primary">Tan ki Rete:
-      <span id="remaining_minutes"> {{ remaining_minutes }} minit {{ remaining_seconds }} segonn</span> segonn</a>
+    <a href="#" class="m-5 link-primary link-underline link-underline-opacity-0 link-underline-primary">{% trans "Tan ki Rete:" %}" 
+      <span id="remaining_minutes"> {{ remaining_minutes }}  {% trans "minit" %}  {{ remaining_seconds }} {% trans "segonn" %}</span> {% trans "segonn" %}</a>
 
-    <a href="#" class="m-5 link-success link-underline link-underline-opacity-0">kesyon ki bon {{ correct_count }}</a>
-    <a href="#" class="m-5 link-danger link-underline link-underline-opacity-0">kesyon ki pa bon {{ incorrect_count}}</a>
-    <a href="#" class="m-5 link-warning link-underline link-underline-opacity-0">kesyon ou skip {{ skipped_count }}</a>
+    <a href="#" class="m-5 link-success link-underline link-underline-opacity-0">{% trans "kesyon ki bon" %} {{ correct_count }}</a>
+    <a href="#" class="m-5 link-danger link-underline link-underline-opacity-0">{% trans "kesyon ki pa bon" %} {{ incorrect_count}}</a>
+    <a href="#" class="m-5 link-warning link-underline link-underline-opacity-0"> {% trans "kesyon ou skip" %} {{ skipped_count }}</a>
   </div>
 </div>
 
