@@ -17,7 +17,7 @@
             <td>{{ record.passed|yesno:"Yes,No" }}</td>
             <td>{{ record.correct_answers }}</td>
             <td>{{ record.incorrect_answers }}</td>
-            <td>{{ record.total_time_seconds }}</td>
+            <td>{{ record.time_display}}</td>
         </tr>
         {% endfor %}
     </table>

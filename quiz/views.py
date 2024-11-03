@@ -34,8 +34,7 @@ def start_quiz(request):
     request.session['start_time'] = time.time()  # Save current time as start time
     
     # Debogaj pou verifye si start_time byen sove
-    print("Start Time Saved:", request.session['start_time'])
-
+    
     selected_questions = random.sample(all_questions, total_questions)
     request.session['questions'] = [q.id for q in selected_questions]
     request.session['current'] = 0
@@ -189,6 +188,9 @@ def results(request):
 @login_required
 def history_view(request):
     history = QuizHistory.objects.filter(user=request.user).order_by('-date_taken')
+    for record in history:
+        minutes, seconds = divmod(record.total_time_seconds, 60)
+        record.time_display = f"{minutes} min {seconds} sec"
     return render(request, 'quiz/history.html', {'history': history})
 
 
