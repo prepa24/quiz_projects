@@ -1,15 +1,15 @@
 # -*- coding: utf-8 -*-
-from datetime import datetime
-from django.utils import timezone
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
-from .models import Question, Answer, QuizConfig, QuizHistory, QuizSettings
-import random
-import time
+from django.utils import timezone
+from datetime import datetime, timedelta
 from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
+from .models import Question, Answer, QuizConfig, QuizHistory, QuizSettings
+import random, time
 from django.utils.translation import gettext as _
+from django.contrib.auth.models import User
+
 
 
 def home(request):
@@ -20,23 +20,22 @@ def start_quiz(request):
         config = QuizConfig.objects.first()
         total_questions = config.num_questions
     except QuizConfig.DoesNotExist:
-        total_questions = 50  # default value if no config found
+        total_questions = 50
 
     all_questions = list(Question.objects.all())
     
     if len(all_questions) < total_questions:
-        # If there are not enough questions, show an error message
         return render(request, 'quiz/error.html', {'message': 'Not enough questions in the database.'})
     
     quiz_settings = QuizSettings.objects.first()
-    if quiz_settings:
-        time_limit = quiz_settings.time_limit
-    else:
-        time_limit = 10  
+    time_limit = quiz_settings.time_limit if quiz_settings else 10
 
-    request.session['time_limit'] = time_limit * 60 
-    request.session['start_time'] = time.time()
+    request.session['time_limit'] = time_limit * 60
+    request.session['start_time'] = time.time()  # Save current time as start time
     
+    # Debogaj pou verifye si start_time byen sove
+    print("Start Time Saved:", request.session['start_time'])
+
     selected_questions = random.sample(all_questions, total_questions)
     request.session['questions'] = [q.id for q in selected_questions]
     request.session['current'] = 0
@@ -144,29 +143,35 @@ def submit_answer(request):
         return redirect('quiz:results')
 
 def results(request):
-    user = request.user  # Ensure this retrieves the logged-in User instance
+    user = request.user
     if not isinstance(user, User):
         return HttpResponse("User must be logged in to view results.", status=403)
 
     answers = request.session.get('answers', {})
     questions = request.session.get('questions', [])
     correct_answers = request.session.get('correct_answers', 0)
-    skipped = len(request.session['skipped'])
-
+    skipped = len(request.session.get('skipped', []))
     incorrect_answers = len(answers) - correct_answers
-    score_percentage = (correct_answers / len(questions)) * 100
+    score_percentage = (correct_answers / len(questions)) * 100 if questions else 0
     passed = score_percentage >= 80
-    #passed = correct_answers >= score_percentage
-    start_time = request.session.get('start_time')
-    total_time = timezone.now() - timezone.make_aware(datetime.fromtimestamp(start_time))
 
-    # Save the quiz attempt
+    start_time = request.session.get("start_time")
+    end_time = time.time()
+    
+    # Verifye si start_time egziste avan nou kontinye
+    if not start_time:
+        print("Error: Start time not found in session.")
+        return redirect('quiz:start_quiz')  # Redireksyon si start_time pa jwenn
+
+    total_time_seconds = int(end_time - start_time)
+
     QuizHistory.objects.create(
         user=user,
+        date_taken=timezone.now(),
         passed=passed,
         correct_answers=correct_answers,
         incorrect_answers=incorrect_answers,
-        total_time=total_time
+        total_time_seconds=total_time_seconds
     )
 
     context = {
@@ -176,8 +181,10 @@ def results(request):
         'skipped': skipped,
         'score_percentage': score_percentage,
         'passed': passed,
+        'total_time_seconds': total_time_seconds
     }
     return render(request, 'quiz/results.html', context)
+
 
 @login_required
 def history_view(request):

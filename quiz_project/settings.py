@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'admin_honeypot',
     'quiz',
     'django_cleanup',
+    'parler',
 ]
 
 MIDDLEWARE = [
@@ -152,7 +153,7 @@ AUTH_PASSWORD_VALIDATORS = [
 from django.utils.translation import gettext_lazy as _
 
 
-LANGUAGE_CODE = 'es'
+LANGUAGE_CODE = 'ht'
 
 TIME_ZONE = 'UTC'
 
@@ -169,7 +170,18 @@ LANGUAGES = [
 
 LOCALE_PATHS = [os.path.join(BASE_DIR, 'locale')]
 
-
+PARLER_LANGUAGES = {
+    None: (
+        {'code': 'en',},
+        {'code': 'fr',},
+        {'code': 'es',},
+        {'code': 'ht',},
+    ),
+    'default': {
+        'fallbacks': ['ht'],          # defaults to PARLER_DEFAULT_LANGUAGE_CODE
+        'hide_untranslated': False,   # the default; let .active_translations() return fallbacks too.
+    }
+}
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
@@ -202,3 +214,4 @@ else:
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'

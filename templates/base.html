@@ -1,3 +1,4 @@
+{% load i18n parler_tags %}
 {% load i18n %}
 <DOCTYPE html>
 <html lang="fr-fr">
@@ -24,7 +25,9 @@
             <a class="nav-link active" aria-current="page" href="{% url 'quiz:home' %}"> {% trans "Akèy" %} </a>
             <a class="nav-link active" aria-current="page" href="{% url 'quiz:history' %}"> {% trans "Istory" %} </a>
 
-            <form action="{% url 'set_language' %}" method="post">
+  
+
+           <form action="{% url 'set_language' %}" method="post">
               {% csrf_token %}
               <select name="language">
                 <option value="">chwazi yon lang </option>
