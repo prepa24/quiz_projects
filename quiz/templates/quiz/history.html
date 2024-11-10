@@ -1,6 +1,7 @@
 <!-- quiz/history.html -->
-{% extends 'base.html' %}
+{% include 'allauth/layouts/base.html' %}
 
+<div class="container text-center mt-5">
 {% block content %}
     <h2>Quiz History</h2>
     <table>
@@ -22,3 +23,4 @@
         {% endfor %}
     </table>
 {% endblock %}
+</div>

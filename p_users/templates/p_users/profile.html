@@ -1,0 +1,22 @@
+{% include 'allauth/layouts/base.html' %}
+{% load i18n %}
+
+<div class="container text-center mt-5">
+{% block content %}
+
+<h3>{{ user.username }}</h3>
+<h2>Mete ajou pwofil ou</h2>
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <label for="first_name">First Name:</label>
+    <input type="text" id="first_name" name="first_name" value="{{ user.first_name }}">
+    
+    <label for="last_name">Last Name:</label>
+    <input type="text" id="last_name" name="last_name" value="{{ user.last_name }}">
+
+    {{ profile_form.as_p }}
+    
+    <button type="submit">Update Profile</button>
+</form>
+{% endblock %}
+</div>

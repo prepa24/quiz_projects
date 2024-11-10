@@ -28,7 +28,9 @@ urlpatterns = [
     
 ]+ i18n_patterns(
     path('', include('quiz.urls')),
+    path('', include('p_users.urls')),
     path('set-language/', set_language, name='set_language'),
+    path('accounts/', include('allauth.urls')),
 )
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,

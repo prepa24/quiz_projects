@@ -45,6 +45,10 @@ ALLOWED_HOSTS = ['localhost', '127.0.0.1', env('RENDER_EXTERNAL_HOSTNAME')]
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
+
+    'allauth',
+    'allauth.account',
+    
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
@@ -55,6 +59,8 @@ INSTALLED_APPS = [
     'quiz',
     'django_cleanup',
     'parler',
+    'p_users',
+    'phonenumber_field',
 ]
 
 MIDDLEWARE = [
@@ -67,6 +73,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "allauth.account.middleware.AccountMiddleware",
     
 ]
 
@@ -215,3 +222,21 @@ else:
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 SESSION_ENGINE = 'django.contrib.sessions.backends.db'
+
+
+AUTHENTICATION_BACKENDS = [
+    
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by email
+    'allauth.account.auth_backends.AuthenticationBackend',
+    
+]
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+ACCOUNT_AUTHENTICATION_METHOD="username_email"
+ACCOUNT_EMAIL_REQUIRED=True
+LOGIN_REDIRECT_URL="/"
+ACCOUNT_CHANGE_EMAIL=True
