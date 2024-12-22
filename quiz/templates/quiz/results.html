@@ -18,6 +18,8 @@
   <!--<p class="fs-2 text-primary">Sote: {{ skipped }}</p>-->
   <p class="fs-2 text-success">{% trans "Pousantaj:" %} {{ score_percentage }}%</p>
     <p class="fs-2 text-success">{% trans "Felisitasyon, ou pase egzamen an!" %}</p>
+
+    
   {% else %}
   <h1>Rezilta Tès La</h1>
   <p class="fs-2 ">{% trans "Total Kesyon:" %} 50</p> <!--{{ total_questions }}-->
@@ -28,6 +30,13 @@
     <p class="fs-2 text-danger">{% trans "Dezole, ou pa pase egzamen an." %}</p>
   {% endif %}
   
+
+  {% if passed %}
+    <a href="{% url 'quiz:certificate' %}" class="btn btn-success">
+        Download Certificate
+    </a>
+{% endif %}
+
   
   <form method="post" action="{% url 'quiz:home' %}">
     {% csrf_token %}

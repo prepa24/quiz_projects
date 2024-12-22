@@ -9,6 +9,9 @@ from .models import Question, Answer, QuizConfig, QuizHistory, QuizSettings
 import random, time
 from django.utils.translation import gettext as _
 from django.contrib.auth.models import User
+#pdf generate
+from reportlab.pdfgen import canvas
+from reportlab.lib.pagesizes import letter
 
 
 
@@ -231,3 +234,53 @@ def check_time(request):
         return JsonResponse({'time_up': True})
     
     return JsonResponse({'time_up': False})
+
+
+def generate_certificate(request):
+    user = request.user
+    if not user.is_authenticated:
+        return HttpResponse("User must be logged in to download certificate.", status=403)
+    
+    # Verify if user passed the quiz
+    last_quiz = QuizHistory.objects.filter(user=user).order_by('-date_taken').first()
+    if not last_quiz or not last_quiz.passed:
+        return HttpResponse("You must pass the quiz to download a certificate.", status=403)
+
+    # Create the PDF response
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = f'attachment; filename="certificate_{user.username}.pdf"'
+
+    # Generate PDF content
+    p = canvas.Canvas(response, pagesize=letter)
+    width, height = letter
+
+    # Header
+    p.setFont("Helvetica-Bold", 24)
+    p.drawCentredString(width / 2, height - 100, _("Certificate of Achievement"))
+
+    # User Name
+    p.setFont("Helvetica", 18)
+    p.drawCentredString(width / 2, height - 200, _(f"This certifies that {user.first_name} {user.last_name}"))
+
+    # Quiz Details
+    p.setFont("Helvetica", 14)
+    p.drawCentredString(
+        width / 2, height - 250,
+        _(f"has successfully completed the quiz with a score of {last_quiz.correct_answers} correct answers.")
+    )
+
+    # Date
+    p.drawCentredString(
+        width / 2, height - 300, 
+        _(f"Date: {datetime.now().strftime('%B %d, %Y')}")
+    )
+
+    # Footer
+    p.setFont("Helvetica-Oblique", 12)
+    p.drawCentredString(width / 2, 50, _("Congratulations on your achievement!"))
+
+    # Save and close the PDF
+    p.showPage()
+    p.save()
+
+    return response
