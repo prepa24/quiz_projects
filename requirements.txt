@@ -20,11 +20,10 @@ django-resized==1.0.2
 g==0.0.5
 gunicorn==23.0.0
 idna==3.8
-mysqlclient==2.2.4
+#mysqlclient==2.2.4
 packaging==24.1
 phonenumbers==8.13.49
 pillow==10.4.0
-psycopg2-binary==2.9.9
 python-ipware==3.0.0
 reportlab==4.2.5
 requests==2.32.3

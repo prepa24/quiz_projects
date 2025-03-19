@@ -1,5 +1,5 @@
 __pycache__/
 question_images/
-.env
+.venv
 .DS_Store
 db.sqlite3

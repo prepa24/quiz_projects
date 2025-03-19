@@ -18,6 +18,7 @@ from reportlab.lib.pagesizes import letter
 def home(request):
     return render(request, 'quiz/start.html')
 
+@login_required
 def start_quiz(request):
     try:
         config = QuizConfig.objects.first()
@@ -47,6 +48,7 @@ def start_quiz(request):
     request.session['incorrect_answers'] = 0
     return redirect('quiz:question')
 
+@login_required
 def question(request):
     questions = request.session.get('questions', [])
     current = request.session.get('current', 0)
