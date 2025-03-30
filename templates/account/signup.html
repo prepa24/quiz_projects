@@ -1,45 +1,62 @@
 {% extends "account/base_entrance.html" %}
-{% load allauth i18n %}
+{% load allauth i18n bootstrap5 %}
+
 {% block head_title %}
-    {% trans "Signup" %}
+    {% trans "Sign Up" %}
 {% endblock head_title %}
+
 {% block content %}
-    {% element h1 %}
-        {% trans "Sign Up" %}
-    {% endelement %}
-    {% setvar link %}
-        <a href="{{ login_url }}">
-        {% endsetvar %}
-        {% setvar end_link %}
-        </a>
-    {% endsetvar %}
-    {% element p %}
-        {% blocktranslate %}Already have an account? Then please {{ link }}sign in{{ end_link }}.{% endblocktranslate %}
-    {% endelement %}
-    {% if not SOCIALACCOUNT_ONLY %}
-        {% url 'account_signup' as action_url %}
-        {% element form form=form method="post" action=action_url tags="entrance,signup" %}
-            {% slot body %}
-                {% csrf_token %}
-                {% element fields form=form unlabeled=True %}
-                {% endelement %}
-                {{ redirect_field }}
-            {% endslot %}
-            {% slot actions %}
-                {% element button tags="prominent,signup" type="submit" %}
-                    {% trans "Sign Up" %}
-                {% endelement %}
-            {% endslot %}
-        {% endelement %}
-    {% endif %}
-    {% if PASSKEY_SIGNUP_ENABLED %}
-        {% element hr %}
-        {% endelement %}
-        {% element button href=signup_by_passkey_url tags="prominent,signup,outline,primary" %}
-            {% trans "Sign up using a passkey" %}
-        {% endelement %}
-    {% endif %}
-    {% if SOCIALACCOUNT_ENABLED %}
-        {% include "socialaccount/snippets/login.html" with page_layout="entrance" %}
-    {% endif %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white text-center py-3">
+                    <h2 class="mb-0">{% trans "Sign Up" %}</h2>
+                </div>
+                
+                <div class="card-body p-4">
+                    <p class="text-center mb-4">
+                        {% blocktranslate trimmed %}
+                        Already have an account? Then please <a href="{{ login_url }}" class="fw-bold text-primary">sign in</a>.
+                        {% endblocktranslate %}
+                    </p>
+
+                    {% if not SOCIALACCOUNT_ONLY %}
+                        <form method="post" action="{% url 'account_signup' %}" class="form-signup">
+                            {% csrf_token %}
+                            
+                            <!-- Bootstrap-styled form fields -->
+                            {% bootstrap_form form layout='floating' %}
+                            
+                            {% if redirect_field_value %}
+                                <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+                            {% endif %}
+                            
+                            <div class="d-grid gap-2 mt-4">
+                                <button type="submit" class="btn btn-primary btn-lg">
+                                    {% trans "Sign Up" %}
+                                </button>
+                            </div>
+                        </form>
+                    {% endif %}
+
+                    {% if PASSKEY_SIGNUP_ENABLED %}
+                        <hr class="my-4">
+                        <div class="d-grid gap-2">
+                            <a href="{{ signup_by_passkey_url }}" class="btn btn-outline-primary">
+                                {% trans "Sign up using a passkey" %}
+                            </a>
+                        </div>
+                    {% endif %}
+
+                    {% if SOCIALACCOUNT_ENABLED %}
+                        <hr class="my-4">
+                        <h6 class="text-center mb-3">{% trans "Or sign up with:" %}</h6>
+                        {% include "socialaccount/snippets/provider_list.html" with process="login" %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock content %}

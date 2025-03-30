@@ -1,6 +1,17 @@
 {% include 'allauth/layouts/base.html' %}
 {% load i18n %}
-
+        {% if messages %}
+        <div class="row">
+            <div class="col-md-8 mx-auto">
+                {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
 <div class="container text-center mt-5">
 {% block content %}
   <h1 class="">{% trans "Byenveni nan Tès Pratik lisans Florida a" %}</h1>

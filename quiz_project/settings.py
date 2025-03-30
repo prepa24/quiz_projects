@@ -48,6 +48,7 @@ INSTALLED_APPS = [
 
     'allauth',
     'allauth.account',
+    'allauth.mfa',
     
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -61,6 +62,7 @@ INSTALLED_APPS = [
     'parler',
     'p_users',
     'phonenumber_field',
+    'bootstrap5',
 ]
 
 MIDDLEWARE = [
@@ -144,6 +146,9 @@ AUTH_PASSWORD_VALIDATORS = [
     },
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        "OPTIONS": {
+            "min_length": 9,
+        },
     },
     {
         'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
