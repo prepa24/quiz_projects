@@ -165,7 +165,7 @@ AUTH_PASSWORD_VALIDATORS = [
 from django.utils.translation import gettext_lazy as _
 
 
-LANGUAGE_CODE = 'ht'
+LANGUAGE_CODE = 'en'
 
 TIME_ZONE = 'UTC'
 
@@ -179,6 +179,22 @@ LANGUAGES = [
     ('es', _('Español')),
     ('fr', _('Français')),
 ]
+
+# settings.py
+EXTRA_LANG_INFO = {
+    'ht': {
+        'bidi': False,
+        'code': 'ht',
+        'name': 'Haitian Creole',
+        'name_local': 'Kreyòl Ayisyen',
+    },
+}
+
+# Ajoute nan lis langaj Django
+import django.conf.locale
+from django.conf import global_settings
+LANG_INFO = dict(django.conf.locale.LANG_INFO, **EXTRA_LANG_INFO)
+django.conf.locale.LANG_INFO = LANG_INFO
 
 LOCALE_PATHS = [os.path.join(BASE_DIR, 'locale')]
 
