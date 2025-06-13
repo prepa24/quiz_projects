@@ -4,15 +4,20 @@
 <div class="container text-center mt-5">
 {% block content %}
     <h2>Quiz History</h2>
-    <table>
-        <tr>
-            <th>Date Taken</th>
-            <th>Passed</th>
-            <th>Correct Answers</th>
-            <th>Incorrect Answers</th>
-            <th>Total Time</th>
-        </tr>
-        {% for record in history %}
+    <br><br>
+<table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Date Taken</th>
+      <th scope="col">Passed</th>
+      <th scope="col">Correct Answers</th>
+      <th scope="col">Incorrect Answers</th>
+      <th scope="col">Total Time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      {% for record in history %}
         <tr>
             <td>{{ record.date_taken|date:"Y-m-d H:i" }}</td>
             <td>{{ record.passed|yesno:"Yes,No" }}</td>
@@ -23,4 +28,7 @@
         {% endfor %}
     </table>
 {% endblock %}
-</div>
+
+
+
+

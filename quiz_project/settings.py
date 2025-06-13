@@ -49,6 +49,8 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.mfa',
+    "django.contrib.humanize",
+
     
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -261,3 +263,19 @@ ACCOUNT_AUTHENTICATION_METHOD="username_email"
 ACCOUNT_EMAIL_REQUIRED=True
 LOGIN_REDIRECT_URL="/"
 ACCOUNT_CHANGE_EMAIL=True
+
+MFA_SUPPORTED_TYPES = ["totp", "webauthn", "recovery_codes"]
+MFA_PASSKEY_LOGIN_ENABLED = True
+MFA_WEBAUTHN_ALLOW_INSECURE_ORIGIN = True
+
+# Make sure that the login methods includes "phone" as a method.
+ACCOUNT_LOGIN_METHODS = {"phone", "email"}
+
+# Add a required phone field to the signup fields.
+ACCOUNT_SIGNUP_FIELDS = [
+  'phone*',
+  'email*'  # Can be left out if you want to only use 'phone'.
+]
+
+
+
