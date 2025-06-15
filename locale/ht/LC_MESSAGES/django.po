@@ -112,7 +112,7 @@ msgstr ""
 #: account/forms.py:92 account/forms.py:413 account/forms.py:573
 #: account/forms.py:685
 msgid "Password"
-msgstr ""
+msgstr "Mod Pas ou"
 
 #: account/forms.py:93
 msgid "Remember Me"
@@ -121,38 +121,38 @@ msgstr "sonje mwen"
 #: account/forms.py:103 account/forms.py:270 account/forms.py:499
 #: account/forms.py:591 account/forms.py:702
 msgid "Email address"
-msgstr ""
+msgstr "Adres Imel ou"
 
 #: account/forms.py:107 account/forms.py:308 account/forms.py:496
 #: account/forms.py:586
 msgid "Email"
-msgstr ""
+msgstr "Imel"
 
 #: account/forms.py:110 account/forms.py:113 account/forms.py:260
 #: account/forms.py:263
 msgid "Username"
-msgstr ""
+msgstr "Non Itilizate"
 
 #: account/forms.py:123
 msgid "Username or email"
-msgstr ""
+msgstr "Non itilizate oubyen imel ou"
 
 #: account/forms.py:126
 msgctxt "field label"
 msgid "Login"
-msgstr ""
+msgstr "Konekte"
 
 #: account/forms.py:137
 msgid "Forgot your password?"
-msgstr ""
+msgstr "Ou Bliye mod pas ou?"
 
 #: account/forms.py:299
 msgid "Email (again)"
-msgstr ""
+msgstr "Antre imel ou anko"
 
 #: account/forms.py:303
 msgid "Email address confirmation"
-msgstr ""
+msgstr "Konfime adres imel ou"
 
 #: account/forms.py:311
 msgid "Email (optional)"
@@ -164,7 +164,7 @@ msgstr ""
 
 #: account/forms.py:419 account/forms.py:574
 msgid "Password (again)"
-msgstr ""
+msgstr "Mete Mod pas ou anko"
 
 #: account/forms.py:554
 msgid "Current Password"

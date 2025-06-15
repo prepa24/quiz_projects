@@ -14,7 +14,7 @@
   <h1>{% trans "Rezilta Tès La" %}</h1>
   <p class="fs-2 ">{% trans "Total Kesyon:" %} 50</p> <!--{{ total_questions }}-->
   <p class="fs-2 text-success">{% trans "Kòrèk:" %} {{ correct }}</p>
-  <p class="fs-2 text-danger">{% trans "Enkòrèk:" %}" {{ incorrect }}</p>
+  <p class="fs-2 text-danger">{% trans "Enkòrèk:" %} {{ incorrect }}</p>
   <!--<p class="fs-2 text-primary">Sote: {{ skipped }}</p>-->
   <p class="fs-2 text-success">{% trans "Pousantaj:" %} {{ score_percentage }}%</p>
     <p class="fs-2 text-success">{% trans "Felisitasyon, ou pase egzamen an!" %}</p>
@@ -32,9 +32,10 @@
   
 
   {% if passed %}
+  <!--
     <a href="{% url 'quiz:certificate' %}" class="btn btn-success">
         Download Certificate
-    </a>
+    </a> -->
 {% endif %}
 
   
