@@ -1,22 +1,103 @@
-{% include 'allauth/layouts/base.html' %}
+{% extends 'allauth/layouts/base.html' %}
 {% load i18n %}
 
-<div class="container text-center mt-5">
 {% block content %}
 
-<h3>{{ user.username }}</h3>
-<h2>Mete ajou pwofil ou</h2>
-<form method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
-    <label for="first_name">First Name:</label>
-    <input type="text" id="first_name" name="first_name" value="{{ user.first_name }}">
-    
-    <label for="last_name">Last Name:</label>
-    <input type="text" id="last_name" name="last_name" value="{{ user.last_name }}">
+{% if messages %}
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endif %}
 
-    {{ profile_form.as_p }}
-    
-    <button type="submit">Update Profile</button>
-</form>
-{% endblock %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <!-- INFO PROFIL -->
+        <div class="col-md-4 text-center mb-4">
+            {% if profile.image %}
+                <img src="{{ profile.image.url }}" alt="Profile"
+                     class="img-thumbnail mb-3"
+                     width="200" height="200">
+            {% else %}
+                <svg xmlns="http://www.w3.org/2000/svg" width="150" height="150" fill="gray"
+                     class="bi bi-person-circle mb-3" viewBox="0 0 16 16">
+                    <path d="M13.468 12.37C12.758 11.226 11.383 10.5 9.999 10.5h-3.998c-1.384 0-2.76.726-3.47 1.87A6.982 6.982 0 0 0 1 8a7 7 0 1 1 12.468 4.37z"/>
+                    <path fill-rule="evenodd" d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                </svg>
+            {% endif %}
+
+            <h3 class="fw-bold">@{{ user.username }}</h3>
+            <p>{{ user.email }}</p>
+            <p>Non: {{ user.first_name }}</p>
+            <p>Prenom: {{ user.last_name }}</p>
+            <p>Telefon: {{ profile.phone_number }}</p>
+            <p>Biyografi: {{ profile.bio }}</p>
+        </div>
+
+        <!-- FORM METE AJOU -->
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h4 class="card-title mb-4">{% trans "Mete ajou pwofil ou" %}</h4>
+                    <form method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+
+                        <div class="mb-3">
+                            <label for="first_name" class="form-label">{% trans "Prenon" %}</label>
+                            <input type="text" class="form-control" id="first_name" name="first_name"
+                                   value="{{ user.first_name }}">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="last_name" class="form-label">{% trans "Non" %}</label>
+                            <input type="text" class="form-control" id="last_name" name="last_name"
+                                   value="{{ user.last_name }}">
+                        </div>
+
+                        <!-- Preview Live Imaj -->
+                        <div class="mb-3 text-center">
+                            <label class="form-label">{% trans "Preview nouvo foto" %}</label><br>
+                            <img id="preview" class=" img-thumbnail"
+                                 src="{% if profile.image %}{{ profile.image.url }}{% else %}https://via.placeholder.com/150{% endif %}"
+                                 width="150" height="150" alt="Preview Foto Profil">
+                        </div>
+
+                        <!-- Field imaj upload + lòt field yo -->
+                        {{ profile_form.as_p }}
+
+                        <button type="submit" class="btn btn-primary w-100">{% trans "Mete ajou" %}</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+<!-- Script pou Preview Live -->
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const input = document.getElementById("id_image");
+        const preview = document.getElementById("preview");
+
+        if (input) {
+            input.addEventListener("change", function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(evt) {
+                        preview.src = evt.target.result;
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        }
+    });
+</script>
+
+{% endblock %}

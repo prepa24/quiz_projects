@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .models import UserProfile
 from .forms import UserProfileForm
+from django.contrib import messages
 
 @login_required
 def profile_view(request):
@@ -15,13 +16,14 @@ def profile_view(request):
             request.user.first_name = request.POST.get('first_name')
             request.user.last_name = request.POST.get('last_name')
             request.user.save()
-            return redirect('profile')  # Change 'profile' to the name of the URL that displays the profile
+            messages.success(request, "Pwofil ou mete ajou avèk siksè!")
+            return redirect('profile')  # asire ou gen name='profile' nan urls.py
 
     else:
         profile_form = UserProfileForm(instance=profile)
 
     context = {
         'profile_form': profile_form,
-        'user': request.user,
+        'profile': profile,  # OBLIGATWA pou image, bio, elatriye
     }
     return render(request, 'p_users/profile.html', context)
