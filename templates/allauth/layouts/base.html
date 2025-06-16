@@ -46,8 +46,8 @@
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="userDropdown"
                    role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  {% if user.userprofile.image %}
-                    <img src="{{ user.userprofile.image.url }}" alt="Profile" class="profile-img me-2">
+                  {% if user_profile.image %}
+                    <img src="{{ user_profile.image.url }}" alt="Profile" class="profile-img me-2">
                   {% else %}
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                          fill="currentColor" class="bi bi-person-circle me-2" viewBox="0 0 16 16">
@@ -55,7 +55,7 @@
                       <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
                     </svg>
                   {% endif %}
-                  {% trans "Profil" %}
+                  {{ user.username }}
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
                   {% url 'account_email' as email_url_ %}

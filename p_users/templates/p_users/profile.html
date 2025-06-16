@@ -19,7 +19,7 @@
 <div class="container mt-5">
     <div class="row justify-content-center">
         <!-- INFO PROFIL -->
-        <div class="col-md-4 text-center mb-4">
+        <div class="col-md-6 text-center mb-4">
             {% if profile.image %}
                 <img src="{{ profile.image.url }}" alt="Profile"
                      class="img-thumbnail mb-3"
@@ -34,11 +34,19 @@
 
             <h3 class="fw-bold">@{{ user.username }}</h3>
             <p>{{ user.email }}</p>
-            <p>Non: {{ user.first_name }}</p>
-            <p>Prenom: {{ user.last_name }}</p>
-            <p>Telefon: {{ profile.phone_number }}</p>
-            <p>Biyografi: {{ profile.bio }}</p>
+            <p><h6>{% trans "Non" %}:</h6> {{ user.first_name }}</p>
+            <p><h6>{% trans "Prenon" %}:</h6> {{ user.last_name }}</p>
+            <p><h6>{% trans "Telefon" %}:</h6> {{ profile.phone_number }}</p>
+            <h6>{% trans "Biyografi" %}:</h6> <p> {{ profile.bio }}</p>
+
+                <button type="button" class="btn btn-danger mt-3" data-bs-toggle="modal" data-bs-target="#deleteAccountModal">
+                🗑️ {% trans "Siprime Kont mwen" %}
+                </button>
         </div>
+
+        <!-- Bouton ki louvri modal la -->
+
+
 
         <!-- FORM METE AJOU -->
         <div class="col-md-6">
@@ -77,6 +85,29 @@
             </div>
         </div>
     </div>
+</div>
+
+
+<!-- Modal Konfimasyon Sipresyon Kont -->
+<div class="modal fade" id="deleteAccountModal" tabindex="-1" aria-labelledby="deleteAccountModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content border-danger">
+      <div class="modal-header">
+        <h5 class="modal-title text-danger" id="deleteAccountModalLabel">{% trans "Konfimasyon Sipresyon" %}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{% trans 'Fèmen' %}"></button>
+      </div>
+      <div class="modal-body">
+        <p>{% trans "Èske ou sèten ou vle siprime kont ou? Aksyon sa a pap ka anile." %}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% trans "Anile" %}</button>
+        <form method="POST" action="{% url 'delete_account' %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">{% trans "Wi, siprime kont mwen" %}</button>
+        </form>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- Script pou Preview Live -->

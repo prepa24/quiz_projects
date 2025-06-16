@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from .models import UserProfile
 from .forms import UserProfileForm
 from django.contrib import messages
+from django.contrib.auth import logout
 
 @login_required
 def profile_view(request):
@@ -27,3 +28,11 @@ def profile_view(request):
         'profile': profile,  # OBLIGATWA pou image, bio, elatriye
     }
     return render(request, 'p_users/profile.html', context)
+
+@login_required
+def delete_account(request):
+    user = request.user
+    user.delete()
+    messages.success(request, "Kont ou te siprime avèk siksè.")
+    logout(request)
+    return redirect("account_login")
