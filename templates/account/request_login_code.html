@@ -1,32 +1,49 @@
 {% extends "account/base_entrance.html" %}
-{% load i18n %}
-{% load allauth account %}
+{% load i18n allauth account %}
+
 {% block head_title %}
     {% translate "Sign In" %}
 {% endblock head_title %}
+
 {% block content %}
-    {% element h1 %}
-        {% translate "Mail me a sign-in code" %}
-    {% endelement %}
-    {% element p %}
-        {% blocktranslate %}You will receive an email containing a special code for a password-free sign-in.{% endblocktranslate %}
-    {% endelement %}
-    {% url 'account_request_login_code' as login_url %}
-    {% element form form=form method="post" action=login_url tags="entrance,login" %}
-        {% slot body %}
+<div class="container d-flex justify-content-center align-items-center my-5">
+  <div class="col-md-6 col-lg-5">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h1 class="mb-4">
+          {% translate "Mail me a sign-in code" %}
+        </h1>
+        <p class="mb-4 text-secondary">
+          {% blocktranslate %}
+            You will receive an email containing a special code for a password-free sign-in.
+          {% endblocktranslate %}
+        </p>
+
+        {% url 'account_request_login_code' as login_url %}
+        {% element form form=form method="post" action=login_url tags="entrance,login" %}
+          {% slot body %}
             {% csrf_token %}
-            {% element fields form=form unlabeled=True %}
-            {% endelement %}
+            <div class="mb-3">
+              {% element fields form=form unlabeled=True %}
+              {% endelement %}
+            </div>
             {{ redirect_field }}
-        {% endslot %}
-        {% slot actions %}
-            {% element button type="submit" tags="prominent,login" %}
-                {% translate "Request Code" %}
+          {% endslot %}
+          {% slot actions %}
+            {% element button type="submit" class="btn btn-primary w-100" %}
+              {% translate "Request Code" %}
             {% endelement %}
-        {% endslot %}
-    {% endelement %}
-    {% url 'account_login' as login_url %}
-    {% element button href=login_url tags="link" %}
-        {% translate "Other sign-in options" %}
-    {% endelement %}
+          {% endslot %}
+        {% endelement %}
+
+        {% url 'account_login' as login_url %}
+        <div class="mt-3 text-center">
+          {% element button href=login_url class="btn btn-link" %}
+            {% translate "Other sign-in options" %}
+          {% endelement %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock content %}
