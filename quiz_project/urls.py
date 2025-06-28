@@ -21,6 +21,9 @@ from django.conf.urls.static import static
 from django.conf.urls.i18n import i18n_patterns
 from django.conf.urls.i18n import set_language
 
+from django.conf.urls import handler404
+
+handler404 = 'quiz.views.custom_404'
 
 urlpatterns = [
     path('admin/', include('admin_honeypot.urls', namespace='admin_honeypot')),

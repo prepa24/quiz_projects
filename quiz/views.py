@@ -12,6 +12,7 @@ from django.contrib.auth.models import User
 #pdf generate
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import letter
+from django.core.paginator import Paginator
 
 
 
@@ -192,7 +193,11 @@ def results(request):
 
 @login_required
 def history_view(request):
-    history = QuizHistory.objects.filter(user=request.user).order_by('-date_taken')
+    queryset = QuizHistory.objects.filter(user=request.user).order_by('-date_taken')
+    paginator = Paginator(queryset, 5)  # 10 eleman pa paj
+    page_number = request.GET.get("page")
+    history = paginator.get_page(page_number)  # otomatik jere paj valab
+
     for record in history:
         minutes, seconds = divmod(record.total_time_seconds, 60)
         record.time_display = f"{minutes} min {seconds} sec"
@@ -286,3 +291,7 @@ def generate_certificate(request):
     p.save()
 
     return response
+
+
+def custom_404(request, exception):
+    return render(request, 'quiz/404.html', status=404)

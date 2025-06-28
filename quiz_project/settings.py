@@ -33,7 +33,7 @@ SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 if ENVIRONMENT == 'development':
-    DEBUG = True
+    DEBUG = False
 else:
     DEBUG = False
 
@@ -260,6 +260,14 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+#EMAIL_HOST = env('EMAIL_HOST'),
+#EMAIL_PORT = 587
+#EMAIL_USE_TLS = True
+#EMAIL_HOST_USER = env('EMAIL_HOST_USER'),
+#EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD'),
+#DEFAULT_FROM_EMAIL = env('DEFAULT_EMAIL'),
+
+
 ACCOUNT_EMAIL_VERIFICATION = "mandatory"
 ACCOUNT_AUTHENTICATION_METHOD="username_email"
 ACCOUNT_EMAIL_REQUIRED=True

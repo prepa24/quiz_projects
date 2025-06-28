@@ -1,82 +1,78 @@
 {% include 'allauth/layouts/base.html' %}
 {% load i18n %}
 
-<div class="container mt-5">
+<div class="container py-5">
   {% block content %}
-  <div class="card ">
-    <div class="card-header text-center">
-      <h3>
+  <div class="card shadow-lg border-0">
+    <div class="card-header text-center bg-primary text-white">
+      <h3 class="mb-0">
         {% if question.image %}
-        <img src="{{ question.image.url }}" alt="{{ question.text }}">
-
+        <img src="{{ question.image.url }}" alt="{{ question.text }}" class="img-fluid rounded mb-3" style="max-height: 200px;">
         {% endif %}
         {{ question.text|safe }}
       </h3>
     </div>
-    <div class="card-body text-start">
+
+    <div class="card-body">
       <form method="post" action="{% url 'quiz:submit_answer' %}" content='text/html; charset=UTF-8'>
         {% csrf_token %}
+        <input type="hidden" name="question_id" value="{{ question.id }}" />
 
-        <input class="" type="hidden" name="question_id" value="{{ question.id }}" />
+        <div class="row justify-content-center">
+          <div class="col-lg-8 col-md-10 col-sm-12">
+            {% for answer in answers %}
+            <div class="form-check mb-3">
+              <input class="form-check-input" type="radio" name="answer" id="answer{{ forloop.counter }}" value="{{ answer.id }}">
+              <label class="form-check-label" for="answer{{ forloop.counter }}">
+                {{ answer.text|safe }}
+              </label>
+            </div>
+            {% endfor %}
 
-        <div class="form-check col-lg-6 col-md-6 col-sm-6 container justify-content-center">
-          {% for answer in answers %}
-          <input class="form-check-input fs-6" type="radio" name="answer" value="{{ answer.id }}" />
-          <label class="form-check-label fs-6">
+            {% if has_error %}
+            <div class="alert alert-danger mt-3">{% trans "Ou dwe chwazi yon repons anvan ou soumèt." %}</div>
+            {% endif %}
 
-            {{ answer.text|safe }}
-          </label><br />
-          {% endfor %}
-
-          <button class="btn btn-success btn-lg  m-3" type="submit">{% trans "Soumèt" %}</button>
-          <button class="btn btn-light btn-lg" type="submit" name="skip" value="true">{% trans "Sote" %}</button>
-
+            <div class="d-flex justify-content-between mt-4">
+              <button class="btn btn-success w-50 me-2" type="submit">{% trans "Soumèt" %}</button>
+              <button class="btn btn-outline-secondary w-50" type="submit" name="skip" value="true">{% trans "Sote" %}</button>
+            </div>
+          </div>
+        </div>
       </form>
-      {% if has_error %}
-      <p style="color: red;">{% trans "Ou dwe chwazi yon repons anvan ou soumèt." %}</p>
-      {% endif %}
+    </div>
+
+    <div class="card-footer bg-light text-center">
+      <div class="d-flex flex-wrap justify-content-center gap-3">
+        <span class="badge bg-dark fs-6">⏳ {% trans "Tan ki Rete:" %} <span id="remaining_minutes">{{ remaining_minutes }} {% trans "minit" %}, {{ remaining_seconds }} {% trans "segonn" %}</span></span>
+        <span class="badge bg-success fs-6">✅ {% trans "Kesyon ki bon" %} {{ correct_count }}</span>
+        <span class="badge bg-danger fs-6">❌ {% trans "Kesyon ki pa bon" %} {{ incorrect_count }}</span>
+        <span class="badge bg-warning text-dark fs-6">⏭ {% trans "Kesyon ou skip" %} {{ skipped_count }}</span>
+      </div>
     </div>
   </div>
-  <div class="card-footer text-body-secondary">
-    <a href="#" class="m-5 link-primary link-underline link-underline-opacity-0 link-underline-primary">{% trans "Tan ki Rete:" %}
-      <span id="remaining_minutes"> {{ remaining_minutes }}  {% trans "minit" %}  {{ remaining_seconds }} {% trans "segonn" %}</span> </a>
 
-    <a href="#" class="m-5 link-success link-underline link-underline-opacity-0">{% trans "kesyon ki bon" %} {{ correct_count }}</a>
-    <a href="#" class="m-5 link-danger link-underline link-underline-opacity-0">{% trans "kesyon ki pa bon" %} {{ incorrect_count}}</a>
-    <a href="#" class="m-5 link-warning link-underline link-underline-opacity-0"> {% trans "kesyon ou skip" %} {{ skipped_count }}</a>
-  </div>
-</div>
+  <script>
+    var remainingMinutes = {{ remaining_minutes }};
+    var remainingSeconds = {{ remaining_seconds }};
 
-<script>
-  // Initial remaining time in seconds
-  var remainingMinutes = {{ remaining_minutes }};
-  var remainingSeconds = {{ remaining_seconds }};
-
-  function updateTime() {
+    function updateTime() {
       if (remainingMinutes <= 0 && remainingSeconds <= 0) {
-          // Redirije itilizatè a lè tan fini
-          window.location.href = "{% url 'quiz:time_up' %}";
+        window.location.href = "{% url 'quiz:time_up' %}";
       } else {
-          // Ajiste tan an chak segonn
-          if (remainingSeconds === 0) {
-              if (remainingMinutes > 0) {
-                  remainingMinutes -= 1;
-                  remainingSeconds = 59;
-              }
-          } else {
-              remainingSeconds -= 1;
+        if (remainingSeconds === 0) {
+          if (remainingMinutes > 0) {
+            remainingMinutes -= 1;
+            remainingSeconds = 59;
           }
-          // Mizajou afichaj la
-          document.getElementById("remaining_minutes").innerText = remainingMinutes + " minit, " + remainingSeconds + " segonn";
-          
-          // Repran tcheke a chak segonn
-          setTimeout(updateTime, 1000);
+        } else {
+          remainingSeconds -= 1;
+        }
+        document.getElementById("remaining_minutes").innerText = remainingMinutes + " minit, " + remainingSeconds + " segonn";
+        setTimeout(updateTime, 1000);
       }
-  }
-
-  // Kòmanse kontwolè tan an
-  setTimeout(updateTime, 1000);
-</script>
-
-{% endblock %}
+    }
+    setTimeout(updateTime, 1000);
+  </script>
+  {% endblock %}
 </div>
