@@ -44,8 +44,8 @@
 <!-- Hero -->
 <header class="hero text-center">
   <div class="container">
-    <h1>Teste konesans ou pou lisans ou an</h1>
-    <p class="lead">Prepare tèt ou pou tès ofisyèl Lisans nan Florida</p>
+    <h1>{% trans "Teste konesans ou pou lisans ou an" %}</h1>
+    <p class="lead">{% trans "Prepare tèt ou pou tès ofisyèl Lisans nan Florida" %}</p>
     <form method="post" action="{% url 'quiz:start_quiz' %}">
     {% csrf_token %}
     <button class="btn btn-warning btn-lg mt-4" type="submit">{% trans "Kòmanse Koulye a" %}</button>
@@ -56,22 +56,22 @@
 <!-- Avantaj -->
 <section class="py-5 bg-light">
   <div class="container">
-    <h2 class="text-center mb-4">Poukisa itilize sit sa a?</h2>
+    <h2 class="text-center mb-4">{% trans "Poukisa itilize sit sa a?" %}</h2>
     <div class="row text-center">
       <div class="col-md-4">
         <div class="mb-3 category-icon">📘</div>
-        <h5>Kontni Mizajou</h5>
-        <p>Tout kesyon tès yo baze sou egzamen aktyèl ki nan Florida.</p>
+        <h5>{% trans "Kontni Mizajou" %}</h5>
+        <p>{% trans "Tout kesyon tès yo baze sou egzamen aktyèl ki nan Florida." %}</p>
       </div>
       <div class="col-md-4">
         <div class="mb-3 category-icon">⚡</div>
-        <h5>Repons Imedya</h5>
-        <p>W ap konnen repons ou yo imedyatman apre chak kesyon.</p>
+        <h5>{% trans "Repons Imedya" %}</h5>
+        <p>{% trans "W ap konnen repons ou yo imedyatman apre chak kesyon." %}</p>
       </div>
       <div class="col-md-4">
         <div class="mb-3 category-icon">🎓</div>
-        <h5>Sètifika Reyisit</h5>
-        <p>Resevwa yon sètifika si ou pase tès la avèk siksè.</p>
+        <h5>{% trans "Sètifika Reyisit" %}</h5>
+        <p>{% trans "Resevwa yon sètifika si ou pase tès la avèk siksè." %}</p>
       </div>
     </div>
   </div>
@@ -85,8 +85,8 @@
         <img style="width : 70%;"  src="{% static 'prepatest.png' %}" class="img-fluid rounded shadow " alt="Quiz Image">
       </div>
       <div class="col-md-6">
-        <h2>Kisa sit sa a ye?</h2>
-        <p>Se yon platfòm pou ede moun ki vle pase egzamen pou Lisans nan Florida (tankou chofè ti machin, chofè kamyon, elatriye). W ap ka fè pratik, wè estatistik ou, epi prepare w pou ou al pase tès ou.</p>
+        <h2>{% trans "Kisa sit sa a ye?" %}</h2>
+        <p>{% trans "Se yon platfòm pou ede moun ki vle pase egzamen pou Lisans nan Florida (tankou chofè ti machin, chofè kamyon, elatriye). W ap ka fè pratik, wè estatistik ou, epi prepare w pou ou al pase tès ou." %}</p>
       </div>
     </div>
   </div>
@@ -95,30 +95,30 @@
 <!-- Kategori -->
 <section id="kategori" class="py-5 bg-light">
   <div class="container">
-    <h2 class="text-center mb-4">Kategori Egzamen</h2>
+    <h2 class="text-center mb-4">{% trans "Kategori Egzamen" %}</h2>
     <div class="row text-center">
       <div class="col-md-3">
         <div class="card p-3">
           <div class="category-icon">🚗</div>
-          <h5 class="mt-2">Chofè</h5>
+          <h5 class="mt-2">{% trans "Chofè" %}</h5>
         </div>
       </div>
       <div class="col-md-3">
         <div class="card p-3">
           <div class="category-icon">🏠</div>
-          <h5 class="mt-2">Imobilye</h5>
+          <h5 class="mt-2">{% trans "Imobilye" %}</h5>
         </div>
       </div>
       <div class="col-md-3">
         <div class="card p-3">
           <div class="category-icon">🛡️</div>
-          <h5 class="mt-2">Sekirite</h5>
+          <h5 class="mt-2">{% trans "Sekirite" %}</h5>
         </div>
       </div>
       <div class="col-md-3">
         <div class="card p-3">
           <div class="category-icon">👷</div>
-          <h5 class="mt-2">Konstriksyon</h5>
+          <h5 class="mt-2">{% trans "Konstriksyon" %}</h5>
         </div>
       </div>
     </div>
@@ -128,8 +128,8 @@
 <!-- CTA -->
 <section class="py-5 text-center bg-primary text-white">
   <div class="container">
-    <h2>Pran Tès Ou Koulye a</h2>
-    <p>Pa pèdi tan. Prepare tèt ou epi jwenn lisans ou!</p>
+    <h2>{% trans "Pran Tès Ou Koulye a" %}</h2>
+    <p>{% trans "Pa pèdi tan. Prepare tèt ou epi jwenn lisans ou!" %}</p>
     <form method="post" action="{% url 'quiz:start_quiz' %}">
     {% csrf_token %}
     <button class="btn btn-light btn-lg" type="submit">{% trans "Kòmanse Gratis" %}</button>
@@ -141,7 +141,7 @@
 <!-- Footer -->
 <footer class="text-center">
   <div class="container">
-    <p>&copy; 2025 Quiz Lisans Florida | Devlope pou edike kominote a</p>
+    <p>&copy; 2025 Quiz Lisans Florida | {% trans "Devlope pou edike kominote a" %}</p>
   </div>
 </footer>
 
