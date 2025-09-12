@@ -1,0 +1,41 @@
+{% include 'allauth/layouts/base.html' %}
+{% load i18n %}
+
+
+<div class="d-flex align-items-center justify-content-center vh-100 text-center" > 
+{% block content %}
+    <style>
+            body {
+                background-color: #f8f9fa;
+            }
+            .svg-container {
+                max-width: 300px;
+                margin: auto;
+            }
+            .svg-container svg {
+                width: 100%;
+                height: auto;
+            }
+        </style>
+    <div>
+            <div class="svg-container mb-4">
+                <!-- SVG ANIMASYON -->
+                <svg viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M256 0C114.836 0 0 114.836 0 256s114.836 256 256 256 256-114.836 256-256S397.164 0 256 0zm0 472c-119.38 0-216-96.62-216-216S136.62 40 256 40s216 96.62 216 216-96.62 216-216 216z" fill="#ffc107"/>
+                    <circle cx="256" cy="176" r="24" fill="#343a40">
+                        <animate attributeName="r" values="24;20;24" dur="1.5s" repeatCount="indefinite" />
+                    </circle>
+                    <rect x="236" y="216" width="40" height="120" rx="20" fill="#343a40">
+                        <animate attributeName="y" values="216;212;216" dur="1.5s" repeatCount="indefinite" />
+                    </rect>
+                </svg>
+            </div>
+            <h1 class="display-4 text-danger">{% trans "Nap travay sou tradiksyon sa 🚧" %}</h1>
+            <p class="lead">{% trans "Lang ou chwazi a poko fin tradui. Tanpri retounen pita 🙏🏽." %}</p>
+            <a href="/" class="btn btn-primary mt-3">{% trans "Tounen Nan Paj Akèy la" %}</a>
+    </div>
+</div>
+{% endblock %}
+
+
+

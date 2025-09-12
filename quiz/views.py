@@ -19,6 +19,9 @@ from django.core.paginator import Paginator
 def home(request):
     return render(request, 'quiz/start.html')
 
+def incomplete_translation(request):
+    return render(request, "quiz/incomplete_translation.html")
+
 @login_required
 def start_quiz(request):
     try:
