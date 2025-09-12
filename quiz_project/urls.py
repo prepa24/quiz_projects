@@ -19,7 +19,8 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from django.conf.urls.i18n import i18n_patterns
-from django.conf.urls.i18n import set_language
+#from django.conf.urls.i18n import set_language
+
 
 from django.conf.urls import handler404
 
@@ -28,13 +29,14 @@ handler404 = 'quiz.views.custom_404'
 urlpatterns = [
     path('admin/', include('admin_honeypot.urls', namespace='admin_honeypot')),
     path('prepaadmin/', admin.site.urls),
-    path('', include('quiz.urls')),
+    
     
 ]+ i18n_patterns(
-    
+    path('', include('quiz.urls')),
     path('', include('p_users.urls')),
-    path('set-language/', set_language, name='set_language'),
+    path("i18n/", include("django.conf.urls.i18n")),
     path('accounts/', include('allauth.urls')),
+    prefix_default_language=False,
 )
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,

@@ -7,7 +7,6 @@ class ForceDefaultLanguageMiddleware:
     """
     def __init__(self, get_response):
         self.get_response = get_response
-        self.default_lang = 'ht'
 
     def __call__(self, request):
         # Si w ta vle kite /admin an an anglè, dekomante 3 liy sa yo:
@@ -16,8 +15,10 @@ class ForceDefaultLanguageMiddleware:
         #     request.LANGUAGE_CODE = 'en'
         #     return self.get_response(request)
 
-        translation.activate(self.default_lang)
-        request.LANGUAGE_CODE = self.default_lang
+        if not request.path.startswith(('/en/', '/es/')):  
+            # Fòse kreyòl si pa gen prefiks lang
+            translation.activate('ht')
+            request.LANGUAGE_CODE = 'ht'
         response = self.get_response(request)
         translation.deactivate()
         return response

@@ -70,10 +70,11 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    #'django.middleware.locale.LocaleMiddleware',
+    
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'quiz.middleware.ForceDefaultLanguageMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -183,7 +184,7 @@ LANGUAGES = [
     ('ht', _('Kreyòl')),
     ('en', _('English')),
     ('es', _('Español')),
-    ('fr', _('Français')),
+    
 ]
 
 # settings.py
@@ -207,7 +208,6 @@ LOCALE_PATHS = [os.path.join(BASE_DIR, 'locale')]
 PARLER_LANGUAGES = {
     None: (
         {'code': 'en',},
-        {'code': 'fr',},
         {'code': 'es',},
         {'code': 'ht',},
     ),
@@ -271,8 +271,6 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 
 ACCOUNT_EMAIL_VERIFICATION = "mandatory"
-ACCOUNT_AUTHENTICATION_METHOD="username_email"
-ACCOUNT_EMAIL_REQUIRED=True
 LOGIN_REDIRECT_URL="/"
 ACCOUNT_CHANGE_EMAIL=True
 
@@ -281,13 +279,11 @@ MFA_PASSKEY_LOGIN_ENABLED = True
 MFA_WEBAUTHN_ALLOW_INSECURE_ORIGIN = True
 
 # Make sure that the login methods includes "phone" as a method.
-ACCOUNT_LOGIN_METHODS = {"phone", "email"}
+ACCOUNT_LOGIN_METHODS = {"username", "email"}
 
 # Add a required phone field to the signup fields.
 ACCOUNT_SIGNUP_FIELDS = [
-  'phone*',
-  'email*'  # Can be left out if you want to only use 'phone'.
-]
+  'email*', 'username*', 'password1*', 'password2*']
 
 
 
