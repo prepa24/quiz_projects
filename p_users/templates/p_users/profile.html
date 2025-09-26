@@ -35,7 +35,7 @@
             <h3 class="fw-bold">@{{ user.username }}</h3>
             <p>{{ user.email }}</p>
             <p><h6>{% trans "Non" %}:</h6> {{ user.first_name }}</p>
-            <p><h6>{% trans "Prenon" %}:</h6> {{ user.last_name }}</p>
+            <p><h6>{% trans "Siyati" %}:</h6> {{ user.last_name }}</p>
             <p><h6>{% trans "Telefon" %}:</h6> {{ profile.phone_number }}</p>
             <h6>{% trans "Biyografi" %}:</h6> <p> {{ profile.bio }}</p>
 
@@ -57,25 +57,26 @@
                         {% csrf_token %}
 
                         <div class="mb-3">
-                            <label for="first_name" class="form-label">{% trans "Prenon" %}</label>
+                            <label for="first_name" class="form-label">{% trans "Non w" %}</label>
                             <input type="text" class="form-control" id="first_name" name="first_name"
                                    value="{{ user.first_name }}">
                         </div>
 
                         <div class="mb-3">
-                            <label for="last_name" class="form-label">{% trans "Non" %}</label>
+                            <label for="last_name" class="form-label">{% trans "Siyati w" %}</label>
                             <input type="text" class="form-control" id="last_name" name="last_name"
                                    value="{{ user.last_name }}">
                         </div>
 
-                        <!-- Preview Live Imaj -->
+                        <!-- Preview Live Imaj
                         <div class="mb-3 text-center">
                             <label class="form-label">{% trans "Preview nouvo foto" %}</label><br>
                             <img id="preview" class=" img-thumbnail"
                                  src="{% if profile.image %}{{ profile.image.url }}{% else %}https://via.placeholder.com/150{% endif %}"
                                  width="150" height="150" alt="Preview Foto Profil">
                         </div>
-
+                         -->
+                         
                         <!-- Field imaj upload + lòt field yo -->
                         {{ profile_form.as_p }}
 

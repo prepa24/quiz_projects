@@ -978,7 +978,7 @@ msgid ""
 "href=\"%(email_url)s\">issue a new email confirmation request</a>."
 msgstr "Lyen konfimasyon imèl sa a ekspire oswa li pa valab. Tanpri <a href=\"%(email_url)s\">fè yon nouvo demann konfimasyon imèl</a>."
 
-#: templates/account/login.html:19
+#: templates/account/login.html:23
 #, python-format
 msgid ""
 "If you have not created an account yet, then please %(link)ssign "
@@ -1161,7 +1161,7 @@ msgstr "Enskri"
 msgid "Sign Up"
 msgstr "Enskri"
 
-#: templates/account/signup.html:17 templates/account/signup_by_passkey.html:17
+#: templates/account/signup.html:20 templates/account/signup_by_passkey.html:23
 #, python-format
 msgid "Already have an account? Then please %(link)ssign in%(end_link)s."
 msgstr "Ou deja gen yon kont? Tanpri %(link)skonekte%(end_link)s."
