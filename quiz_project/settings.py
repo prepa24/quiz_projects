@@ -288,5 +288,11 @@ ACCOUNT_LOGIN_METHODS = {"username", "email"}
 ACCOUNT_SIGNUP_FIELDS = [
   'email*', 'username*', 'password1*', 'password2*']
 
+# settings.py
+ACCOUNT_FORMS = {
+    "signup": "p_users.forms.CustomSignupForm",
+}
+
+
 
 
